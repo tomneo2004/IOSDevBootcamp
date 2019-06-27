@@ -38,4 +38,22 @@ func beerSong(withThisManyBottles numberOfBottles : Int){
 
 beerSong(withThisManyBottles: 200)
 
+func star(num : Int){
+    
+    for row in 1...num{
+        for i in 1...num{
+            if i < row{
+                print(" ", separator: "", terminator: "")
+            }
+            else{
+                print("*", separator: "", terminator: "")
+            }
+        }
+        print("\n")
+    }
+}
+
+star(num: 10)
+
+
 
