@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Auto_Layout_Practice" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OC4-kU-CFu">
+                                <rect key="frame" x="0.0" y="20" width="375" height="323.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="artBoard" translatesAutoresizingMaskIntoConstraints="NO" id="gHC-9A-GTg">
+                                        <rect key="frame" x="67.5" y="98" width="240" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="AcD-8T-J4V"/>
+                                            <constraint firstAttribute="height" constant="128" id="GxN-lv-Xjq"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="gHC-9A-GTg" firstAttribute="centerX" secondItem="OC4-kU-CFu" secondAttribute="centerX" id="06a-yc-W9o"/>
+                                    <constraint firstItem="gHC-9A-GTg" firstAttribute="centerY" secondItem="OC4-kU-CFu" secondAttribute="centerY" id="NXT-ME-GPZ"/>
+                                    <constraint firstItem="gHC-9A-GTg" firstAttribute="centerX" secondItem="OC4-kU-CFu" secondAttribute="centerX" id="jNd-cB-PDF"/>
+                                    <constraint firstItem="gHC-9A-GTg" firstAttribute="centerY" secondItem="OC4-kU-CFu" secondAttribute="centerY" id="kiE-yL-YrS"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9NJ-Ja-9uq">
+                                <rect key="frame" x="0.0" y="343.5" width="375" height="323.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notebook" translatesAutoresizingMaskIntoConstraints="NO" id="MG8-Sc-bw2">
+                                        <rect key="frame" x="67.5" y="98" width="240" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="2yW-zF-0js"/>
+                                            <constraint firstAttribute="height" constant="128" id="mag-8I-xL4"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="MG8-Sc-bw2" firstAttribute="centerY" secondItem="9NJ-Ja-9uq" secondAttribute="centerY" id="eoz-y9-s5Z"/>
+                                    <constraint firstItem="MG8-Sc-bw2" firstAttribute="centerX" secondItem="9NJ-Ja-9uq" secondAttribute="centerX" id="l56-EM-08V"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9NJ-Ja-9uq" secondAttribute="bottom" id="8co-Hq-6uv"/>
+                            <constraint firstItem="OC4-kU-CFu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="HSm-8V-wlI"/>
+                            <constraint firstItem="9NJ-Ja-9uq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HwA-1v-Ffp"/>
+                            <constraint firstItem="9NJ-Ja-9uq" firstAttribute="top" secondItem="OC4-kU-CFu" secondAttribute="bottom" id="JwB-8A-zN8"/>
+                            <constraint firstItem="OC4-kU-CFu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LFn-ux-aTJ"/>
+                            <constraint firstItem="9NJ-Ja-9uq" firstAttribute="height" secondItem="OC4-kU-CFu" secondAttribute="height" id="Or6-gr-CA2"/>
+                            <constraint firstAttribute="trailing" secondItem="OC4-kU-CFu" secondAttribute="trailing" id="Ou9-SS-RIq"/>
+                            <constraint firstItem="9NJ-Ja-9uq" firstAttribute="top" secondItem="OC4-kU-CFu" secondAttribute="bottom" id="eT0-HS-bRy"/>
+                            <constraint firstAttribute="trailing" secondItem="9NJ-Ja-9uq" secondAttribute="trailing" id="th1-7X-mHJ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="artBoard" width="433" height="533"/>
+        <image name="notebook" width="373.5" height="527"/>
+    </resources>
+</document>
