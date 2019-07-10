@@ -8,11 +8,13 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
     
-    var categories = [Category]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    //let realm = try! Realm()
+    let realm = AppDelegate.getRealm()
+    var categories : Results<Category>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,16 +25,14 @@ class CategoryViewController: UITableViewController {
     //MARK: UITableView Datasource Delegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return categories.count
+        return categories?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let category = categories[indexPath.row]
-        
-        cell.textLabel?.text = category.name!
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Category added yet!!!"
         
         return cell
     }
@@ -43,19 +43,18 @@ class CategoryViewController: UITableViewController {
         self.performSegue(withIdentifier: "goToItems", sender: self)
     }
     
+    //MARK: Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let vc = segue.destination as! TodoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow{
             
-            let category = categories[indexPath.row]
-            
-            vc.selectedCategory = category
+            vc.selectedCategory = categories?[indexPath.row]
         }
     }
 
-   
+   //MARK: Add category
     @IBAction func addButtonPress(_ sender: UIButton) {
         
         let alert = UIAlertController(title: "Add Category", message: "Add new category", preferredStyle: .alert)
@@ -69,12 +68,10 @@ class CategoryViewController: UITableViewController {
             let name = alert.textFields?[0].text
             
             //create new category
-            let newCategory = Category(context: self.context)
-            newCategory.name = name
+            let newCategory = Category()
+            newCategory.name = name!
             
-            self.categories.append(newCategory)
-            
-            self.saveData()
+            self.saveData(category: newCategory)
             
         }
         
@@ -87,23 +84,19 @@ class CategoryViewController: UITableViewController {
 
 extension CategoryViewController{
     
-    func loadData(with request:NSFetchRequest<Category> = Category.fetchRequest()){
-        
-        do{
-            categories = try context.fetch(request)
-        }
-        catch{
-            
-            print("Error fetch data \(error)")
-        }
-        
+    func loadData(){
+
+        categories = realm.objects(Category.self)
+
         tableView.reloadData()
     }
     
-    func saveData(){
+    func saveData(category : Category){
         
         do{
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         }
         catch{
             print("Error saving context \(error)")
@@ -117,12 +110,9 @@ extension CategoryViewController : UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        let request : NSFetchRequest<Category> = Category.fetchRequest()
+        categories = categories?.filter("name CONTAINS[cd] %@", searchBar.text!)
         
-        request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!)
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        loadData(with: request)
+        tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
