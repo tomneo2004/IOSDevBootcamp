@@ -10,7 +10,9 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
+    
+    
     
     //let realm = try! Realm()
     let realm = AppDelegate.getRealm()
@@ -18,7 +20,7 @@ class CategoryViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         loadData()
     }
     
@@ -30,7 +32,7 @@ class CategoryViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Category added yet!!!"
         
@@ -42,6 +44,7 @@ class CategoryViewController: UITableViewController {
         
         self.performSegue(withIdentifier: "goToItems", sender: self)
     }
+    
     
     //MARK: Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,6 +83,22 @@ class CategoryViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //MARK: override from super for updating model
+    override func updateModel(at indexPath: IndexPath) {
+        
+        do{
+            
+            if let category = self.categories?[indexPath.row]{
+                
+                try self.realm.write {
+                    self.realm.delete(category)
+                }
+            }
+        }
+        catch{
+            print("Delete category error \(error)")
+        }
+    }
 }
 
 extension CategoryViewController{
@@ -128,3 +147,5 @@ extension CategoryViewController : UISearchBarDelegate{
         }
     }
 }
+
+

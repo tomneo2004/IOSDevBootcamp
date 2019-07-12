@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
 
     //let realm = try! Realm()
     let realm = AppDelegate.getRealm()
@@ -97,7 +97,7 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = todoItems?[indexPath.row]{
          
@@ -109,9 +109,6 @@ class TodoListViewController: UITableViewController {
             
             cell.textLabel?.text = "No item added"
         }
-        
-        
-        
         
         return cell
     }
@@ -140,6 +137,24 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true);
     }
     
+    
+    //MARK: override from super for updating model
+    override func updateModel(at indexPath: IndexPath) {
+        
+        do{
+            
+            if let item = todoItems?[indexPath.row]{
+                
+                try self.realm.write {
+                    realm.delete(item)
+                }
+            }
+            
+        }
+        catch{
+            print("Delete category error \(error)")
+        }
+    }
     
     //MARK: - Other method
 
