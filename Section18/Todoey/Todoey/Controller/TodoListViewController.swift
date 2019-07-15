@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import RealmSwift
+import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
 
@@ -19,7 +20,8 @@ class TodoListViewController: SwipeTableViewController {
     //let dataFilePath  = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var selectedCategory : Category?{
 
         didSet{
@@ -37,8 +39,44 @@ class TodoListViewController: SwipeTableViewController {
         
         //loadData()
         
-        
+        tableView.separatorStyle = .none
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let colorHex = selectedCategory?.backgroundColor else{
+            fatalError("No color")
+        }
+            
+        title = selectedCategory!.name
+        
+        updateNavBar(colorHex: colorHex)
+        
+        searchBar.barTintColor = UIColor(hexString: colorHex)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        updateNavBar(colorHex: "007AFF")
+
+    }
+    
+    //MARK: - Update nav bar
+    func updateNavBar(colorHex : String){
+        
+        guard let navBar = navigationController?.navigationBar else{
+            fatalError("Navigation bar does not exist")
+        }
+        
+        navBar.barTintColor = UIColor(hexString: colorHex)
+        navBar.tintColor = UIColor.init(contrastingBlackOrWhiteColorOn: navBar.barTintColor, isFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.init(contrastingBlackOrWhiteColorOn: navBar.barTintColor, isFlat: true)!]
+        
+        
     }
     
     //MARK: - Add new item
@@ -102,8 +140,11 @@ class TodoListViewController: SwipeTableViewController {
         if let item = todoItems?[indexPath.row]{
          
             cell.textLabel?.text = item.title
-            
             cell.accessoryType = item.done ? .checkmark : .none
+            if let color = UIColor(hexString: selectedCategory?.backgroundColor).darken(byPercentage: CGFloat(indexPath.row)/CGFloat(todoItems!.count)){
+                cell.backgroundColor = color
+            }
+            cell.textLabel?.textColor = UIColor.init(contrastingBlackOrWhiteColorOn: cell.backgroundColor, isFlat: true)
         }
         else{
             
@@ -153,6 +194,21 @@ class TodoListViewController: SwipeTableViewController {
         }
         catch{
             print("Delete category error \(error)")
+        }
+        
+        
+        //update all items' color after delete index path
+        let visibleCells = tableView.visibleCells
+        for i in 0..<visibleCells.count{
+            if i <= indexPath.row{
+                continue
+            }
+            
+            let cell = visibleCells[i]
+            if let color = UIColor(hexString: selectedCategory?.backgroundColor).darken(byPercentage: CGFloat(i-1)/CGFloat(todoItems!.count)){
+                cell.backgroundColor = color
+            }
+            cell.textLabel?.textColor = UIColor.init(contrastingBlackOrWhiteColorOn: cell.backgroundColor, isFlat: true)
         }
     }
     

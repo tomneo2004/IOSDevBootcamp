@@ -166,7 +166,7 @@ extension AppDelegate{
             //new Realm version. Change version every time you change model
             //version number must greater than old version otherwise it will not
             //migrate
-            let migrateVersion : UInt64 = 1
+            let migrateVersion : UInt64 = 2
             
             //create a configuration
             let config = Realm.Configuration(
