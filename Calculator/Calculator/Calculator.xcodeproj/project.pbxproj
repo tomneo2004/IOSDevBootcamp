@@ -52,12 +52,44 @@
 		5225398722E06C1D00D03323 /* CalculatorModule */ = {
 			isa = PBXGroup;
 			children = (
-				5225398822E06C4700D03323 /* CalculatorViewController.swift */,
-				5225398922E06C4700D03323 /* CalculatorController.swift */,
-				5225398A22E06C4700D03323 /* CalculatorModel.swift */,
-				5225398B22E06C4700D03323 /* CalculatorProtocol.swift */,
+				5225399322E06FC600D03323 /* protocol */,
+				5225399222E06FBE00D03323 /* model */,
+				5225399122E06FB800D03323 /* controller */,
+				5225399022E06FAE00D03323 /* view */,
 			);
 			path = CalculatorModule;
+			sourceTree = "<group>";
+		};
+		5225399022E06FAE00D03323 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5225398822E06C4700D03323 /* CalculatorViewController.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		5225399122E06FB800D03323 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				5225398922E06C4700D03323 /* CalculatorController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		5225399222E06FBE00D03323 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5225398A22E06C4700D03323 /* CalculatorModel.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		5225399322E06FC600D03323 /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				5225398B22E06C4700D03323 /* CalculatorProtocol.swift */,
+			);
+			name = protocol;
 			sourceTree = "<group>";
 		};
 		ADB196142146629E00C5317F = {
