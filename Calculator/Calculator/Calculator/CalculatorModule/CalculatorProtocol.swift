@@ -31,14 +31,19 @@ protocol CalculatorControllerToViewProtocol : class{
 
 protocol CalculatorControllerToModelProtocol : class{
     
+    ///append a digital number
     func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(Double)->())
     
+    ///append a decimal to digital
     func appendDecimalSymbol(_ completeHandler:(Double)->())
     
+    ///append a operator
     func appendOperatorWith(_ operatorString:String, _ completeHandler:(Double)->())
     
+    ///clear all
     func clearAll(_ completeHandler:(Double)->())
     
+    ///calculate final result
     func calculateResult(_ completeHandler:(Double)->())
 }
 
