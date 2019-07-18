@@ -52,21 +52,31 @@ class CalculatorViewController : UIViewController, CalculatorControllerToViewPro
     //MARK: - Clear action
     
     @IBAction func clearPress(_ sender: UIButton) {
+        
+        MVC_Controller.onClearPress()
     }
     
     //MARK: - Digital action
     @IBAction func digitalPress(_ sender: UIButton) {
+        
+        MVC_Controller.onDigitalNumberPress(sender.currentTitle!)
     }
     
     //MARK: - Operator action
     @IBAction func operatorPress(_ sender: UIButton) {
+        
+        MVC_Controller.onOperatorPress(sender.currentTitle!)
     }
     
     //MARK: - Calculate action
     @IBAction func calculatePress(_ sender: UIButton) {
+        
+        MVC_Controller.onCalculatePress()
     }
     
     //MARK: - Decimal action
     @IBAction func decimalPress(_ sender: UIButton) {
+        
+        MVC_Controller.onDecimalPress()
     }
 }
