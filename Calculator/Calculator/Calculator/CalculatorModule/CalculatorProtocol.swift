@@ -31,6 +31,15 @@ protocol CalculatorControllerToViewProtocol : class{
 
 protocol CalculatorControllerToModelProtocol : class{
     
+    func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(Double)->())
+    
+    func appendDecimalSymbol(_ completeHandler:(Double)->())
+    
+    func appendOperatorWith(_ operatorString:String, _ completeHandler:(Double)->())
+    
+    func clearAll(_ completeHandler:(Double)->())
+    
+    func calculateResult(_ completeHandler:(Double)->())
 }
 
 protocol CalculatorModelToControllerProtocol : class{

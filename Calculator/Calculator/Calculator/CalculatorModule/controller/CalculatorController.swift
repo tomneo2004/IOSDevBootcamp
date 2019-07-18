@@ -20,32 +20,47 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
     
     func onDigitalNumberPress(_ numberString: String) {
         
-        //TODO:tell model to append a number
-        print("number press \(numberString)")
+        //tell model to append a number
+        MVC_Model.appendDigitalNumberWith(numberString) { (result) in
+            
+            //TODO:tell view update UI with result
+        }
     }
     
     func onDecimalPress() {
         
-        //TODO:tell model to append a decimal
-        print("decimal press")
+        //tell model to append a decimal
+        MVC_Model.appendDecimalSymbol { (result) in
+            
+            //TODO:tell view update UI with result
+        }
     }
     
     func onOperatorPress(_ operatorString: String) {
         
-        //TODO:tell model to append a operator
+        //tell model to append a operator
         
-        print("operator press \(operatorString)")
+        MVC_Model.appendOperatorWith(operatorString) { (result) in
+            
+            //TODO:tell view update UI with result
+        }
     }
     
     func onClearPress() {
         
-        //TODO:tell model to clear all
-        print("clear press")
+        //tell model to clear all
+        MVC_Model.clearAll { (result) in
+            
+            //TODO:tell view update UI with result
+        }
     }
     
     func onCalculatePress() {
         
-        //TODO:tell model to calculate
-        print("calculate press")
+        //tell model to calculate
+        MVC_Model.calculateResult { (result) in
+            
+            //TODO:tell view update UI with result
+        }
     }
 }
