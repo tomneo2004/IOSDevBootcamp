@@ -16,17 +16,23 @@ class Brain {
     
     init() {
         
-        tailNode = NumberNode(0)
-        
+        reset()
     }
     
     func appendNode(_ newNode:Node, _ completeHandler:(Node)->()){
         
+        //try to merge node first, if it fail then try to append node
+        //to list
         tailNode?.mergeWithNode(newNode, completeHandler: { (result, node) in
             
-            //if merge fail
+            //if merge fail then try append node
             if !result{
-                //TODO:append node
+                //append node
+                if node.canAppend(){
+                    
+                    appendNodeToTailNode(node)
+                }
+                
             }
             
             //merge successful
@@ -36,10 +42,56 @@ class Brain {
     
     func resetBrain(_ completeHandler:(Node)->()){
         
+        guard let tail = tailNode else{
+            
+            reset()
+            return
+        }
+        
+        var preNode = tail.parentNode
+        
+        while(preNode != nil){
+            
+            tail.dropConnection()
+            tailNode = preNode
+            preNode = tailNode?.parentNode
+        }
+        
+        reset()
+        
+        completeHandler(tailNode!)
+        
+        print("Brain reset \(tailNode!.valueInString())")
     }
     
     func calculate(_ completeHandler:(Node)->()){
         
+    }
+    
+    
+    ///reset brain to initial state
+    private func reset(){
+        
+        tailNode = NumberNode(0)
+    }
+    
+    //conect tail node to new node and make tail node
+    //point to new node
+    private func appendNodeToTailNode(_ newNode:Node){
+        
+        if let tail = tailNode{
+            
+            if tail !== newNode{
+                
+                newNode.parentNode = tailNode
+                tailNode?.childNode = newNode
+                
+                
+            }
+        }
+        
+        //point tail to new node
+        tailNode = newNode
     }
     
     ///make brain's tail node point to new node
@@ -62,7 +114,7 @@ class Brain {
             
         }
         
-        //switch tail to new node
+        //point tail to new node
         tailNode = newNode
     }
 }

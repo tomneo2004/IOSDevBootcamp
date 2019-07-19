@@ -40,6 +40,9 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     func clearAll(_ completeHandler: (Node) -> ()) {
         
+        Brain.sharedBrain.resetBrain { (result) in
+            
+        }
     }
     
     func calculateResult(_ completeHandler: (Node) -> ()) {

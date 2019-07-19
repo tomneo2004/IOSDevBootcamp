@@ -17,7 +17,11 @@ protocol NodeProtocol {
     ///return false and a node you give as parameter when merge fail
     func mergeWithNode(_ node:Node, completeHandler:(Bool, Node)->())
     
+    ///return value of node in string
     func valueInString() -> String
+    
+    ///can this node be append
+    func canAppend() -> Bool
 }
 
 class Node : NodeProtocol{
@@ -43,6 +47,11 @@ class Node : NodeProtocol{
     }
     
     func valueInString() -> String {
+        
+        fatalError("Subclass must override this method")
+    }
+    
+    func canAppend() -> Bool {
         
         fatalError("Subclass must override this method")
     }

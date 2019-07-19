@@ -195,6 +195,11 @@ class NumberNode: Node {
         
         return displayableValue
     }
+    
+    override func canAppend() -> Bool {
+        
+        return true
+    }
 }
 
 
