@@ -104,29 +104,25 @@ class Brain {
             
             while(nextOpNode != nil){
                 
-                //check priority
-                if (nextOpNode!.operatorPriority() < priority{
+                //if priority is lower
+                if nextOpNode!.operatorPriority().rawValue < priority.rawValue{
                     
-                    nextOpNode = findNextOperatorNodeFrom(nextOpNode)
-                }
-                else{
+                    nextOpNode = findNextOperatorNodeFrom(nextOpNode!)
                     
-                    //if evaluate successful
-                    if let numberNode = nextOpNode?.evaluate(){
-                        
-                        if tail === nextOpNode{
-                            tailNode = numberNode
-                        }
-                        
-                        nextOpNode = findNextOperatorNodeFrom(numberNode)
-                    }
-                    else{//evaluate fail
-                        
-                    
-                    }
+                    continue
                 }
                 
+                //if evaluate successful
+                if let numberNode = nextOpNode?.evaluate(){
+                    
+                    if tail === nextOpNode{
+                        tailNode = numberNode
+                    }
+                    
+                    nextOpNode = findNextOperatorNodeFrom(numberNode)
+                }
                 
+                fatalError("evaluate fail")
             }
         }
         

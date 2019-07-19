@@ -14,9 +14,10 @@ enum OperatorType{
 }
 
 enum OperatorPriority : Int{
-    case LowPriority = 0
-    case MediumPriority = 1
-    case HighPriority = 2
+    
+    case LowPriority = 1
+    case MediumPriority = 2
+    case HighPriority = 3
 }
 
 protocol OperatorNodeProtocol {
@@ -24,8 +25,8 @@ protocol OperatorNodeProtocol {
     ///Tell operator to perform operation
     ///return nil if fail otherwise return a NumberNode
     ///
-    //When success, node will drop connection include nodes
-    //that involve operation
+    ///When success, node will drop connection include nodes
+    ///that involve in operation
     func evaluate() -> NumberNode?
     func operatorType() -> OperatorType
     func operatorPriority() -> OperatorPriority
