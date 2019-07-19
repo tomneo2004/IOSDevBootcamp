@@ -12,27 +12,37 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     weak var MVC_Controller : CalculatorModelToControllerProtocol!
     
+    override init() {
+        let _ = Brain.sharedBrain
+    }
+    
     deinit {
         print("Model deinit")
     }
     
-    func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (Double) -> ()) {
+    func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (Node) -> ()) {
+        
+        Brain.sharedBrain.appendNode(NumberNode(Double(numberString)!)) { (result) in
+            
+        }
+    }
+    
+    func appendDecimalSymbol(_ completeHandler: (Node) -> ()) {
+        
+        Brain.sharedBrain.appendNode(DecimalNode()) { (result) in
+            
+        }
+    }
+    
+    func appendOperatorWith(_ operatorString: String, _ completeHandler: (Node) -> ()) {
         
     }
     
-    func appendDecimalSymbol(_ completeHandler: (Double) -> ()) {
+    func clearAll(_ completeHandler: (Node) -> ()) {
         
     }
     
-    func appendOperatorWith(_ operatorString: String, _ completeHandler: (Double) -> ()) {
-        
-    }
-    
-    func clearAll(_ completeHandler: (Double) -> ()) {
-        
-    }
-    
-    func calculateResult(_ completeHandler: (Double) -> ()) {
+    func calculateResult(_ completeHandler: (Node) -> ()) {
         
     }
 

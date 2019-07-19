@@ -32,19 +32,19 @@ protocol CalculatorControllerToViewProtocol : class{
 protocol CalculatorControllerToModelProtocol : class{
     
     ///append a digital number
-    func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(Double)->())
+    func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(Node)->())
     
     ///append a decimal to digital
-    func appendDecimalSymbol(_ completeHandler:(Double)->())
+    func appendDecimalSymbol(_ completeHandler:(Node)->())
     
     ///append a operator
-    func appendOperatorWith(_ operatorString:String, _ completeHandler:(Double)->())
+    func appendOperatorWith(_ operatorString:String, _ completeHandler:(Node)->())
     
     ///clear all
-    func clearAll(_ completeHandler:(Double)->())
+    func clearAll(_ completeHandler:(Node)->())
     
     ///calculate final result
-    func calculateResult(_ completeHandler:(Double)->())
+    func calculateResult(_ completeHandler:(Node)->())
 }
 
 protocol CalculatorModelToControllerProtocol : class{

@@ -21,7 +21,7 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
     func onDigitalNumberPress(_ numberString: String) {
         
         //tell model to append a number
-        MVC_Model.appendDigitalNumberWith(numberString) { (result) in
+        MVC_Model.appendDigitalNumberWith(numberString) { (node) in
             
             //TODO:tell view update UI with result
         }
@@ -30,7 +30,7 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
     func onDecimalPress() {
         
         //tell model to append a decimal
-        MVC_Model.appendDecimalSymbol { (result) in
+        MVC_Model.appendDecimalSymbol { (node) in
             
             //TODO:tell view update UI with result
         }
@@ -40,7 +40,7 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
         
         //tell model to append a operator
         
-        MVC_Model.appendOperatorWith(operatorString) { (result) in
+        MVC_Model.appendOperatorWith(operatorString) { (node) in
             
             //TODO:tell view update UI with result
         }
@@ -49,7 +49,7 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
     func onClearPress() {
         
         //tell model to clear all
-        MVC_Model.clearAll { (result) in
+        MVC_Model.clearAll { (node) in
             
             //TODO:tell view update UI with result
         }
@@ -58,7 +58,7 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
     func onCalculatePress() {
         
         //tell model to calculate
-        MVC_Model.calculateResult { (result) in
+        MVC_Model.calculateResult { (node) in
             
             //TODO:tell view update UI with result
         }
