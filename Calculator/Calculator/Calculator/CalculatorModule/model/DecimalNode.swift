@@ -10,7 +10,10 @@ import Foundation
 
 class DecimalNode: Node {
     
-    override func mergeWithNode(_ node: Node, completeHandler: (Bool, Node) -> ()) {
+    override func mergeWithNode(_ node:Node,
+                                completeHandler:(Node)->(),
+                                appendHandler:(Node)->(),
+                                replaceHandler:(Node)->()) {
         
     }
     

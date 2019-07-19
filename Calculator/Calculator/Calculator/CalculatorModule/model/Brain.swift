@@ -19,24 +19,49 @@ class Brain {
         reset()
     }
     
-    func appendNode(_ newNode:Node, _ completeHandler:(Node)->()){
+    func inputNumberNode(_ newNode:NumberNode, _ completeHandler:(Node)->()){
         
         //try to merge node first, if it fail then try to append node
         //to list
-        tailNode?.mergeWithNode(newNode, completeHandler: { (result, node) in
-            
-            //if merge fail then try append node
-            if !result{
-                //append node
-                if node.canAppend(){
-                    
-                    appendNodeToTailNode(node)
-                }
-                
-            }
+        tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
             
             //merge successful
-            print("\(node.valueInString())\n\((node as! NumberNode).value)")
+            print("\(selfNode.valueInString())\n\((selfNode as! NumberNode).value)")
+            
+        }, appendHandler: { (node) in
+            
+        }, replaceHandler: { (node) in
+            
+        })
+        
+    }
+    
+    func inputDecimalNode(_ newNode:DecimalNode, _ completeHandler:(Node)->()){
+        
+        //try to merge node first, if it fail then try to append node
+        //to list
+        tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
+            
+            //merge successful
+            print("\(selfNode.valueInString())\n\((selfNode as! NumberNode).value)")
+            
+        }, appendHandler: { (node) in
+            
+        }, replaceHandler: { (node) in
+            
+        })    }
+    
+    func inputOperatorNode(_ newNode:OperatorNode, _ completeHandler:(Node)->()){
+        
+        //try to merge node first, if it fail then try to append node
+        //to list
+        tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
+            
+            
+        }, appendHandler: { (node) in
+            
+        }, replaceHandler: { (node) in
+            
         })
     }
     

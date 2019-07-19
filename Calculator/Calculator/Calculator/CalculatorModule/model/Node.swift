@@ -15,7 +15,10 @@ protocol NodeProtocol {
     ///return true and a node which you call on when merge successful
     ///
     ///return false and a node you give as parameter when merge fail
-    func mergeWithNode(_ node:Node, completeHandler:(Bool, Node)->())
+    func mergeWithNode(_ node:Node,
+                       completeHandler:(Node)->(),
+                       appendHandler:(Node)->(),
+                       replaceHandler:(Node)->())
     
     ///return value of node in string
     func valueInString() -> String
@@ -41,7 +44,10 @@ class Node : NodeProtocol{
         childNode = nil
     }
     
-    func mergeWithNode(_ node: Node, completeHandler: (Bool, Node)->()) {
+    func mergeWithNode(_ node:Node,
+                       completeHandler:(Node)->(),
+                       appendHandler:(Node)->(),
+                       replaceHandler:(Node)->()) {
         
         fatalError("Subclass must override this method")
     }

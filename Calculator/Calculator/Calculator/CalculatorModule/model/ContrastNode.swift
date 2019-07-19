@@ -11,24 +11,27 @@ import Foundation
 class ContrastOpNode: OperatorNode {
     
     
-    override func mergeWithNode(_ node: Node,
+    override func mergeWithNode(_ node:Node,
                                 completeHandler:(Node)->(),
-                                rejectHandler:(Node)->(),
-                                failHandler:()->()) {
+                                appendHandler:(Node)->(),
+                                replaceHandler:(Node)->()) {
         
         //we dont accept number node
+        //we absorb node
         if let _ = node as? NumberNode{
-            failHandler()
+            completeHandler(self)
             return
         }
         
         //we dont accept decimal node
+        //we absorb node
         if let _ = node as? DecimalNode{
-            failHandler()
+            completeHandler(self)
             return
         }
         
-        rejectHandler(node)
+        //operator node shoud be append
+        appendHandler(node)
     }
     
     override func valueInString() -> String {
@@ -41,7 +44,7 @@ class ContrastOpNode: OperatorNode {
         return true
     }
     
-    override func evaluate() -> NumberNode {
+    override func evaluate() -> NumberNode? {
         
         guard let leftHandNode = self.parentNode else{
             fatalError("Contrast node must have parent node")

@@ -136,16 +136,19 @@ class NumberNode: Node {
     }
     
     //MARK: - override from parent
-    override func mergeWithNode(_ node: Node, completeHandler: (Bool, Node) -> ()) {
+    override func mergeWithNode(_ node:Node,
+                                completeHandler:(Node)->(),
+                                appendHandler:(Node)->(),
+                                replaceHandler:(Node)->()) {
         
         
-        //deal with number node
+        //merge with number node
         if let numberNode = node as? NumberNode{
             
             //if digitals over or equal max
             //dot not allow more digitals
             if wholeOffset + fractionOffset >= maxDigitals{
-                completeHandler(true, self)
+                completeHandler(self)
                 return
             }
             
@@ -165,14 +168,14 @@ class NumberNode: Node {
                 
             }
             
-            completeHandler(true, self)
+            completeHandler(self)
             
             print("current digits \(wholeOffset + fractionOffset) of \(maxDigitals)")
             
             return
         }
         
-        //deal with decimal node
+        //merge with decimal node
         if let _ = node as? DecimalNode{
             
             //was no decimal
@@ -182,13 +185,13 @@ class NumberNode: Node {
                 
             }
             
-            completeHandler(true, self)
+            completeHandler(self)
             return
         }
         
-        //return false and other node
-        //when other node can not be deal with
-        completeHandler(false, node)
+        //when other node can not be merged
+        //we notify to append
+        appendHandler(node)
     }
     
     override func valueInString() -> String{

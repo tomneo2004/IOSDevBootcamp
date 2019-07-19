@@ -22,14 +22,14 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (Node) -> ()) {
         
-        Brain.sharedBrain.appendNode(NumberNode(Double(numberString)!)) { (result) in
+        Brain.sharedBrain.inputNumberNode(NumberNode(Double(numberString)!)) { (result) in
             
         }
     }
     
     func appendDecimalSymbol(_ completeHandler: (Node) -> ()) {
         
-        Brain.sharedBrain.appendNode(DecimalNode()) { (result) in
+        Brain.sharedBrain.inputDecimalNode(DecimalNode()) { (result) in
             
         }
     }
