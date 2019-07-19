@@ -89,6 +89,66 @@ class Brain {
         print("Brain reset \(tailNode!.valueInString())")
     }
     
+    ///Call this when new operator append
+    private func evaluateNodes(){
+        
+        if let tail = tailNode{
+            
+            var nextOpNode = findNextOperatorNodeFrom(tail)
+            
+            if nextOpNode == nil{
+                return
+            }
+            
+            let priority = nextOpNode!.operatorPriority()
+            
+            while(nextOpNode != nil){
+                
+                //check priority
+                if (nextOpNode!.operatorPriority() < priority{
+                    
+                    nextOpNode = findNextOperatorNodeFrom(nextOpNode)
+                }
+                else{
+                    
+                    //if evaluate successful
+                    if let numberNode = nextOpNode?.evaluate(){
+                        
+                        if tail === nextOpNode{
+                            tailNode = numberNode
+                        }
+                        
+                        nextOpNode = findNextOperatorNodeFrom(numberNode)
+                    }
+                    else{//evaluate fail
+                        
+                    
+                    }
+                }
+                
+                
+            }
+        }
+        
+    }
+    
+    ///find nearest operator node from given node
+    private func findNextOperatorNodeFrom(_ node:Node) -> OperatorNode?{
+        
+        var nextNode : Node? = node
+        
+        while(nextNode != nil){
+            
+            if let opNode = nextNode as? OperatorNode{
+                return opNode
+            }
+            
+            nextNode = nextNode?.parentNode
+        }
+        
+        return nil
+    }
+    
     func calculate(_ completeHandler:(Node)->()){
         
     }
