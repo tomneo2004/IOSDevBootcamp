@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ContrastOpNode: OperatorNode {
+class ContrastNode: OperatorNode {
     
     
     override func mergeWithNode(_ node:Node,
@@ -52,7 +52,8 @@ class ContrastOpNode: OperatorNode {
         
         if let numberNode = leftHandNode as? NumberNode{
             
-            let result = NumberNode(numberNode.value.doubleValue() * -1.0)
+            let value = numberNode.value * Decimal(-1.0)
+            let result = NumberNode(value.doubleValue())
             result.parentNode = leftHandNode.parentNode
             result.childNode = childNode
             

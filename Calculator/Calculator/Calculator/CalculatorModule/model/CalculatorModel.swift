@@ -9,6 +9,11 @@ import Foundation
 
 class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
+    private let operatorGroup : [String:OperatorNode.Type] = [
+        
+        "+/-": ContrastNode.self
+    ]
+    
     
     weak var MVC_Controller : CalculatorModelToControllerProtocol!
     
@@ -36,6 +41,16 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     func appendOperatorWith(_ operatorString: String, _ completeHandler: (Node) -> ()) {
         
+        let opType = operatorGroup[operatorString]
+        let opInstance : OperatorNode? = opType!.init()
+        
+        guard let newOperator = opInstance else{
+            fatalError("create operator from \(operatorString) fail, operator probably not defined")
+        }
+        
+        Brain.sharedBrain.inputOperatorNode(newOperator) { (result) in
+            
+        }
     }
     
     func clearAll(_ completeHandler: (Node) -> ()) {

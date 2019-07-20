@@ -26,7 +26,7 @@ class Brain {
         tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
             
             //merge successful
-            print("\(selfNode.valueInString())\n\((selfNode as! NumberNode).value)")
+            print("valueInString:\(selfNode.valueInString())\nRealValue:\((selfNode as! NumberNode).value)")
             
         }, appendHandler: { (node) in
             
@@ -43,13 +43,15 @@ class Brain {
         tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
             
             //merge successful
-            print("\(selfNode.valueInString())\n\((selfNode as! NumberNode).value)")
+            print("valueInString:\(selfNode.valueInString())\nRealValue:\((selfNode as! NumberNode).value)")
             
         }, appendHandler: { (node) in
             
         }, replaceHandler: { (node) in
             
-        })    }
+        })
+        
+    }
     
     func inputOperatorNode(_ newNode:OperatorNode, _ completeHandler:(Node)->()){
         
@@ -59,6 +61,16 @@ class Brain {
             
             
         }, appendHandler: { (node) in
+            
+            appendNodeToTailNode(node)
+            logAllNodes()
+            guard let opNode = tailNode as? OperatorNode else{
+                fatalError("append operator node at tail but tail is not operator node")
+            }
+            
+            evaluateNodesWithPriority(opNode.operatorPriority())
+            logAllNodes()
+            
             
         }, replaceHandler: { (node) in
             
@@ -75,6 +87,7 @@ class Brain {
         
         var preNode = tail.parentNode
         
+        //disconnect all nodes
         while(preNode != nil){
             
             tail.dropConnection()
@@ -90,45 +103,43 @@ class Brain {
     }
     
     ///Call this when new operator append
-    private func evaluateNodes(){
+    private func evaluateNodesWithPriority(_ priority:OperatorPriority){
         
-        if let tail = tailNode{
+        guard let tail = tailNode else{
+           return
+        }
+        
+        var nextOpNode = findNextOperatorNodeFrom(tail)
+        
+        while(nextOpNode != nil){
             
-            var nextOpNode = findNextOperatorNodeFrom(tail)
-            
-            if nextOpNode == nil{
-                return
+            //if priority is lower then find next operator
+            if nextOpNode!.operatorPriority().rawValue < priority.rawValue{
+                
+                nextOpNode = findNextOperatorNodeFrom(nextOpNode!)
+                
+                continue
             }
             
-            let priority = nextOpNode!.operatorPriority()
-            
-            while(nextOpNode != nil){
+            //if evaluate successful
+            if let numberNode = nextOpNode?.evaluate(){
                 
-                //if priority is lower
-                if nextOpNode!.operatorPriority().rawValue < priority.rawValue{
-                    
-                    nextOpNode = findNextOperatorNodeFrom(nextOpNode!)
-                    
-                    continue
+                if tail === nextOpNode{
+                    tailNode = numberNode
                 }
                 
-                //if evaluate successful
-                if let numberNode = nextOpNode?.evaluate(){
-                    
-                    if tail === nextOpNode{
-                        tailNode = numberNode
-                    }
-                    
-                    nextOpNode = findNextOperatorNodeFrom(numberNode)
-                }
+                nextOpNode = findNextOperatorNodeFrom(numberNode)
+            }
+            else{//evaluate fail
                 
                 fatalError("evaluate fail")
             }
+
         }
-        
     }
     
     ///find nearest operator node from given node
+    ///traverse back to parent
     private func findNextOperatorNodeFrom(_ node:Node) -> OperatorNode?{
         
         var nextNode : Node? = node
@@ -151,9 +162,27 @@ class Brain {
     
     
     ///reset brain to initial state
-    private func reset(){
+    private func reset(_ value:Double = 0.0){
         
-        tailNode = NumberNode(0)
+        tailNode = NumberNode(value)
+    }
+    
+    private func logAllNodes(){
+        
+        guard let tail = tailNode else{
+            
+            print("tail node is nil")
+            return
+        }
+        
+        var nextNode : Node? = tail
+        var log = ""
+        while(nextNode != nil){
+            log = nextNode!.valueInString()+log
+            nextNode = nextNode?.parentNode
+        }
+        
+        print("Operation sentence: \(log)")
     }
     
     //conect tail node to new node and make tail node

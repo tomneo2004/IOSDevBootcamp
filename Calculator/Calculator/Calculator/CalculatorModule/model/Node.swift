@@ -38,6 +38,10 @@ class Node : NodeProtocol{
     var parentNode : Node?
     var childNode : Node?
     
+    required init(){
+        
+    }
+    
     deinit {
         print("node removed")
     }

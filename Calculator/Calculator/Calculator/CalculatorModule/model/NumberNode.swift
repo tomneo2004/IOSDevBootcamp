@@ -17,6 +17,12 @@ class NumberNode: Node {
         }
     }
     
+    private var valueSign : Double{
+        get{
+            return value < 0.0 ? -1.0 : 1.0
+        }
+    }
+    
     ///is number a decimal or integer
     private var isDecimal : Bool = false
     
@@ -24,9 +30,9 @@ class NumberNode: Node {
     private var displayableValue : String{
         get{
             //nagetive sign or positive
-            var result = wholeNumber < 0 ? "-" : ""
+            var result = wholeNumber < 0 || fractionNumber < 0.0 ? "-" : ""
             
-            result += String(wholeNumber)
+            result += String(wholeNumber.magnitude)
             
             //if number is decimal
             if isDecimal{
@@ -36,7 +42,8 @@ class NumberNode: Node {
                 if fractionOffset > 0{
                     
                     //extract fraction part where is after decimal
-                    let fractions = "\(fractionNumber)".split(separator: ".")
+                    let absFractionNumber = fractionNumber.magnitude
+                    let fractions = "\(absFractionNumber)".split(separator: ".")
                     var fractionStr = fractions.count > 1 ? fractions[1] : ""
                     
                     //how long is fraction part
@@ -54,6 +61,7 @@ class NumberNode: Node {
                             fractionStr += "0"
                         }
                     }
+                    
                     result += fractionStr
                 }
                 
@@ -156,16 +164,22 @@ class NumberNode: Node {
             //we deal with whole number
             if !isDecimal{
                 
+                var newWholeNumber = wholeNumber
+                let absWholeNumber = wholeNumber.magnitude
                 wholeOffset += 1
-                wholeNumber = wholeNumber * 10 + Int(numberNode.value.doubleValue())
+                newWholeNumber = Int(absWholeNumber * 10 + UInt(numberNode.value.doubleValue()))
                 
+                wholeNumber = newWholeNumber * Int(valueSign)
             }
             else{ //if this number's value is decimal
                 
                 fractionOffset += 1
+                var newFractionNumber = fractionNumber
+                let absFractionNumber = fractionNumber.magnitude
                 let newFraction = numberNode.value / pow(Decimal(10.0), fractionOffset)
-                fractionNumber  = fractionNumber + newFraction
+                newFractionNumber  = absFractionNumber + newFraction
                 
+                fractionNumber = newFractionNumber * Decimal(valueSign)
             }
             
             completeHandler(self)
