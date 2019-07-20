@@ -20,6 +20,13 @@ enum OperatorPriority : Int{
     case HighPriority = 3
 }
 
+let operatorPriorities : [OperatorPriority]  = [
+    
+    OperatorPriority.HighPriority,
+    OperatorPriority.MediumPriority,
+    OperatorPriority.LowPriority
+]
+
 protocol OperatorNodeProtocol {
     
     ///Tell operator to perform operation

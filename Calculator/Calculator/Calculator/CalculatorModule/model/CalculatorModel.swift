@@ -72,6 +72,9 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     func calculateResult(_ completeHandler: (Node) -> ()) {
         
+        Brain.sharedBrain.calculate { (node) in
+            
+        }
     }
 
 }

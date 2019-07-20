@@ -191,8 +191,49 @@ class Brain {
         return nil
     }
     
+    func findLastNumberNode() -> NumberNode?{
+        
+        if let tail = tailNode{
+            
+            var nextNode : Node? = tail
+            
+            while(nextNode != nil){
+                if let numberNode = nextNode as? NumberNode{
+                    return numberNode
+                }
+                nextNode = nextNode?.parentNode
+            }
+        }
+        
+        return nil
+    }
+    
     func calculate(_ completeHandler:(Node)->()){
         
+        if let opNode = tailNode as? OperatorNode{
+            
+            //if tail node is double input operator
+            if opNode.operatorType() == .DoubleInput{
+                
+                //get last number node
+                guard let lastNumberNode = findLastNumberNode() else{
+                    fatalError("No NumberNode in operation sentence")
+                }
+                
+                //create new number node with last number node's value
+                let newNumberNode = NumberNode(lastNumberNode.value)
+                
+                //append to tail node
+                appendNodeToTailNode(newNumberNode)
+            }
+        }
+        
+        for priority in operatorPriorities{
+            
+            evaluateNodesWithPriority(priority)
+        }
+        
+        logAllNodes()
     }
     
     
