@@ -50,11 +50,8 @@ class InvertNode: OperatorNode {
             //inverse sign of number node
             numberNode.invertSign()
             
-            //make left hand's child node as my child node
-            numberNode.childNode = self.childNode
-            
-            //drop our connection
-            self.dropConnection()
+            //tell brain remove this node
+            Brain.sharedBrain.removeNode(self)
             
             return numberNode
         }

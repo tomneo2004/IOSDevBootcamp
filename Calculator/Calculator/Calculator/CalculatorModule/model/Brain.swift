@@ -253,4 +253,56 @@ class Brain {
         //point tail to new node
         tailNode = newNode
     }
+    
+    func replaceNode(_ node:Node, _ withNode:Node, _ includeParent:Bool = false, _ includeChild:Bool = false){
+        
+        withNode.parentNode = nil
+        withNode.childNode = nil
+        
+        var mostLeftNode : Node?
+        var mostRightNode : Node?
+        
+        if includeParent{
+            mostLeftNode = node.parentNode?.parentNode
+            node.parentNode?.dropConnection()
+        }
+        else{
+            mostLeftNode = node.parentNode
+        }
+        
+        if includeChild{
+            mostRightNode = node.childNode?.childNode
+            node.childNode?.dropConnection()
+        }
+        else{
+            mostRightNode = node.childNode
+        }
+        
+        if mostLeftNode != nil{
+            mostLeftNode?.childNode = withNode
+            withNode.parentNode = mostLeftNode
+        }
+        
+        if mostRightNode != nil{
+            mostRightNode?.parentNode = withNode
+            withNode.childNode = mostRightNode
+        }
+        
+        node.dropConnection()
+    }
+    
+    func removeNode(_ node:Node){
+        
+        let leftNode : Node? = node.parentNode
+        let rightNode : Node? = node.childNode
+        
+        if leftNode != nil && rightNode != nil {
+            leftNode?.childNode = rightNode
+            rightNode?.parentNode = leftNode
+        }
+        else{
+            leftNode?.childNode = nil
+            rightNode?.parentNode = nil
+        }
+    }
 }

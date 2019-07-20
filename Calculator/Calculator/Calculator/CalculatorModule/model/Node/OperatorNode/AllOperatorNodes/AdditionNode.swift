@@ -62,12 +62,11 @@ class AdditionNode: OperatorNode {
         let newValue = leftValue + rightValue
         let newNumberNode = NumberNode(newValue)
         
-        newNumberNode.parentNode = leftHandNode.parentNode
-        newNumberNode.childNode = rightHandNode.childNode
-        
-        leftHandNode.dropConnection()
-        rightHandNode.dropConnection()
-        self.dropConnection()
+        //tell brain to replace this node and it's parent and child
+        //with newNumberNode
+        //addtion work on left/parent and right/child node, so parent
+        //and child are included
+        Brain.sharedBrain.replaceNode(self, newNumberNode, true, true)
 
         return newNumberNode
     }

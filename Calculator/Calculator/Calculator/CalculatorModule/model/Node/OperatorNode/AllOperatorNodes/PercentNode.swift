@@ -51,12 +51,10 @@ class PercentNode: OperatorNode {
             
             let newNode = NumberNode(value)
             
-            newNode.parentNode = leftHandeNode.parentNode
-            newNode.childNode = self.childNode
-            
-            leftHandeNode.dropConnection()
-            //drop our connection
-            self.dropConnection()
+            //tell brain to replace this node and parent of this node with
+            //newNode
+            //percent only work on left/parent node, so right/child node do not include
+            Brain.sharedBrain.replaceNode(self, newNode, true, false)
             
             return newNode
         }
