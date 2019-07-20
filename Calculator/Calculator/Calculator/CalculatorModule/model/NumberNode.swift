@@ -21,7 +21,7 @@ class NumberNode: Node {
         }
     }
     
-    ///return value in string for display
+    ///return value in string for display purpose
     private var displayableValue : String{
         get{
             //nagetive sign or positive
