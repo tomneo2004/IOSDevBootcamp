@@ -13,7 +13,11 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
         
         "+/-": InvertNode.self,
         "%": PercentNode.self,
-        "+": AdditionNode.self
+        "+": AdditionNode.self,
+        "-": SubtractNode.self,
+        "×": MultiplyNode.self,
+        "÷": DivisionNode.self
+        
     ]
     
     
@@ -44,6 +48,10 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     func appendOperatorWith(_ operatorString: String, _ completeHandler: (Node) -> ()) {
         
         let opType = operatorGroup[operatorString]
+        
+        guard let _ = opType else{
+            fatalError("\(operatorString) not defined")
+        }
         let opInstance : OperatorNode? = opType!.init()
         
         guard let newOperator = opInstance else{

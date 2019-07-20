@@ -26,11 +26,13 @@ class Brain {
         tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
             
             //merge successful
-            print("valueInString:\(selfNode.valueInString())\nRealValue:\((selfNode as! NumberNode).value)")
+            logAllNodes()
             
         }, appendHandler: { (node) in
             
             appendNodeToTailNode(node)
+            
+            logAllNodes()
             
         }, replaceHandler: { (node) in
           
@@ -46,7 +48,7 @@ class Brain {
         tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
             
             //merge successful
-            print("valueInString:\(selfNode.valueInString())\nRealValue:\((selfNode as! NumberNode).value)")
+            logAllNodes()
             
         }, appendHandler: { (node) in
             
@@ -69,8 +71,6 @@ class Brain {
         }, appendHandler: { (node) in
             
             appendNodeToTailNode(node)
-            print("\nbefore evaluation")
-            logAllNodes()
             
             //this should not be called just a test
             guard let opNode = tailNode as? OperatorNode else{
@@ -78,15 +78,17 @@ class Brain {
             }
             
             evaluateNodesWithPriority(opNode.operatorPriority())
-            
-            print("\nafter evaluation:")
-            logAllNodes()
-            
-            
-            
+
         }, replaceHandler: { (node) in
             
             replaceTailNodeWithNode(node)
+            
+            //this should not be called just a test
+            guard let opNode = tailNode as? OperatorNode else{
+                fatalError("append operator node at tail but tail is not operator node")
+            }
+            
+            evaluateNodesWithPriority(opNode.operatorPriority())
         })
     }
     
@@ -121,6 +123,9 @@ class Brain {
         guard let tail = tailNode else{
            return
         }
+        
+        print("\nbefore evaluation")
+        logAllNodes()
         
         var nextOpNode : OperatorNode? = nil
         
@@ -163,6 +168,9 @@ class Brain {
             
             nextOpNode = findNextOperatorNodeFrom(nextOpNode!)
         }
+        
+        print("\nafter evaluation:")
+        logAllNodes()
     }
     
     ///find nearest operator node from given node

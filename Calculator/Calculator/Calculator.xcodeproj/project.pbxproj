@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5214E73D22E2F8C200C0FDC8 /* PercentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E73C22E2F8C200C0FDC8 /* PercentNode.swift */; };
 		5214E74422E3255300C0FDC8 /* AdditionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E74322E3255300C0FDC8 /* AdditionNode.swift */; };
+		5214E74622E3503200C0FDC8 /* SubtractNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E74522E3503200C0FDC8 /* SubtractNode.swift */; };
+		5214E74822E3518F00C0FDC8 /* MultiplyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E74722E3518F00C0FDC8 /* MultiplyNode.swift */; };
+		5214E74A22E3520E00C0FDC8 /* DivisionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E74922E3520E00C0FDC8 /* DivisionNode.swift */; };
 		5216230222E1CE5D000E078D /* InvertNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5216230122E1CE5D000E078D /* InvertNode.swift */; };
 		5216230422E1D038000E078D /* OperatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5216230322E1D038000E078D /* OperatorNode.swift */; };
 		5225398C22E06C4700D03323 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225398822E06C4700D03323 /* CalculatorViewController.swift */; };
@@ -28,6 +31,9 @@
 /* Begin PBXFileReference section */
 		5214E73C22E2F8C200C0FDC8 /* PercentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentNode.swift; sourceTree = "<group>"; };
 		5214E74322E3255300C0FDC8 /* AdditionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionNode.swift; sourceTree = "<group>"; };
+		5214E74522E3503200C0FDC8 /* SubtractNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtractNode.swift; sourceTree = "<group>"; };
+		5214E74722E3518F00C0FDC8 /* MultiplyNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplyNode.swift; sourceTree = "<group>"; };
+		5214E74922E3520E00C0FDC8 /* DivisionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionNode.swift; sourceTree = "<group>"; };
 		5216230122E1CE5D000E078D /* InvertNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvertNode.swift; sourceTree = "<group>"; };
 		5216230322E1D038000E078D /* OperatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorNode.swift; sourceTree = "<group>"; };
 		5225398822E06C4700D03323 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +105,9 @@
 				5214E73C22E2F8C200C0FDC8 /* PercentNode.swift */,
 				5216230122E1CE5D000E078D /* InvertNode.swift */,
 				5214E74322E3255300C0FDC8 /* AdditionNode.swift */,
+				5214E74522E3503200C0FDC8 /* SubtractNode.swift */,
+				5214E74722E3518F00C0FDC8 /* MultiplyNode.swift */,
+				5214E74922E3520E00C0FDC8 /* DivisionNode.swift */,
 			);
 			path = AllOperatorNodes;
 			sourceTree = "<group>";
@@ -263,6 +272,9 @@
 				5214E73D22E2F8C200C0FDC8 /* PercentNode.swift in Sources */,
 				5216230422E1D038000E078D /* OperatorNode.swift in Sources */,
 				5216230222E1CE5D000E078D /* InvertNode.swift in Sources */,
+				5214E74822E3518F00C0FDC8 /* MultiplyNode.swift in Sources */,
+				5214E74A22E3520E00C0FDC8 /* DivisionNode.swift in Sources */,
+				5214E74622E3503200C0FDC8 /* SubtractNode.swift in Sources */,
 				5225398E22E06C4700D03323 /* CalculatorModel.swift in Sources */,
 				5225398C22E06C4700D03323 /* CalculatorViewController.swift in Sources */,
 				5225399522E07BDE00D03323 /* Brain.swift in Sources */,
