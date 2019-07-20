@@ -150,9 +150,9 @@
 		5225399222E06FBE00D03323 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				5214E73E22E2FAB500C0FDC8 /* Node */,
 				5225398A22E06C4700D03323 /* CalculatorModel.swift */,
 				5225399422E07BDE00D03323 /* Brain.swift */,
+				5214E73E22E2FAB500C0FDC8 /* Node */,
 			);
 			path = model;
 			sourceTree = "<group>";
