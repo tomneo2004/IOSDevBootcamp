@@ -31,7 +31,8 @@ class Brain {
         }, appendHandler: { (node) in
             
         }, replaceHandler: { (node) in
-            
+          
+            replaceTailNodeWithNode(node)
         })
         
     }
@@ -49,6 +50,7 @@ class Brain {
             
         }, replaceHandler: { (node) in
             
+            replaceTailNodeWithNode(node)
         })
         
     }
@@ -78,6 +80,7 @@ class Brain {
             
         }, replaceHandler: { (node) in
             
+            replaceTailNodeWithNode(node)
         })
     }
     

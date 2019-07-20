@@ -30,18 +30,13 @@ class PercentNode: OperatorNode {
             return
         }
         
-        //operator node shoud be append
-        appendHandler(node)
+        //other operator node shoud replace this node
+        replaceHandler(node)
     }
     
     override func valueInString() -> String {
         
         return "%"
-    }
-    
-    override func canAppend() -> Bool {
-        
-        return true
     }
     
     override func evaluate() -> NumberNode? {

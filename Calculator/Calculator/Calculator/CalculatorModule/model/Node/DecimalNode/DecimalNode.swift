@@ -20,9 +20,4 @@ class DecimalNode: Node {
     override func valueInString() -> String{
         return "."
     }
-    
-    override func canAppend() -> Bool {
-        
-        return false
-    }
 }
