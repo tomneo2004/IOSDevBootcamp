@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5214E73D22E2F8C200C0FDC8 /* PercentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E73C22E2F8C200C0FDC8 /* PercentNode.swift */; };
+		5214E74422E3255300C0FDC8 /* AdditionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214E74322E3255300C0FDC8 /* AdditionNode.swift */; };
 		5216230222E1CE5D000E078D /* InvertNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5216230122E1CE5D000E078D /* InvertNode.swift */; };
 		5216230422E1D038000E078D /* OperatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5216230322E1D038000E078D /* OperatorNode.swift */; };
 		5225398C22E06C4700D03323 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225398822E06C4700D03323 /* CalculatorViewController.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		5214E73C22E2F8C200C0FDC8 /* PercentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentNode.swift; sourceTree = "<group>"; };
+		5214E74322E3255300C0FDC8 /* AdditionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionNode.swift; sourceTree = "<group>"; };
 		5216230122E1CE5D000E078D /* InvertNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvertNode.swift; sourceTree = "<group>"; };
 		5216230322E1D038000E078D /* OperatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorNode.swift; sourceTree = "<group>"; };
 		5225398822E06C4700D03323 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				5214E73C22E2F8C200C0FDC8 /* PercentNode.swift */,
 				5216230122E1CE5D000E078D /* InvertNode.swift */,
+				5214E74322E3255300C0FDC8 /* AdditionNode.swift */,
 			);
 			path = AllOperatorNodes;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				ADB196212146629E00C5317F /* AppDelegate.swift in Sources */,
 				5225398D22E06C4700D03323 /* CalculatorController.swift in Sources */,
 				5225399B22E0A5B200D03323 /* NumberNode.swift in Sources */,
+				5214E74422E3255300C0FDC8 /* AdditionNode.swift in Sources */,
 				5214E73D22E2F8C200C0FDC8 /* PercentNode.swift in Sources */,
 				5216230422E1D038000E078D /* OperatorNode.swift in Sources */,
 				5216230222E1CE5D000E078D /* InvertNode.swift in Sources */,

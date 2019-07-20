@@ -12,7 +12,8 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     private let operatorGroup : [String:OperatorNode.Type] = [
         
         "+/-": InvertNode.self,
-        "%": PercentNode.self
+        "%": PercentNode.self,
+        "+": AdditionNode.self
     ]
     
     

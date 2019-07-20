@@ -30,6 +30,8 @@ class Brain {
             
         }, appendHandler: { (node) in
             
+            appendNodeToTailNode(node)
+            
         }, replaceHandler: { (node) in
           
             replaceTailNodeWithNode(node)
@@ -48,9 +50,11 @@ class Brain {
             
         }, appendHandler: { (node) in
             
+            //DecimalNode should not be append to list
+            
         }, replaceHandler: { (node) in
             
-            replaceTailNodeWithNode(node)
+            //DecimalNode should not replace any node in list
         })
         
     }
@@ -67,6 +71,8 @@ class Brain {
             appendNodeToTailNode(node)
             print("\nbefore evaluation")
             logAllNodes()
+            
+            //this should not be called just a test
             guard let opNode = tailNode as? OperatorNode else{
                 fatalError("append operator node at tail but tail is not operator node")
             }
@@ -116,7 +122,14 @@ class Brain {
            return
         }
         
-        var nextOpNode = findNextOperatorNodeFrom(tail)
+        var nextOpNode : OperatorNode? = nil
+        
+        if let opNode = tailNode as? OperatorNode{
+            nextOpNode = opNode
+        }
+        else{
+            nextOpNode = findNextOperatorNodeFrom(tailNode!)
+        }
         
         while(nextOpNode != nil){
             
@@ -128,20 +141,27 @@ class Brain {
                 continue
             }
             
+            var pointToResult = false
+            
+            if nextOpNode?.parentNode === tailNode!{
+                pointToResult = true
+            }
+            else if nextOpNode?.childNode === tailNode{
+                pointToResult = true
+            }
+            
             //if evaluate successful
             if let numberNode = nextOpNode?.evaluate(){
                 
-                if tail === nextOpNode{
+                if tail === nextOpNode || pointToResult{
                     tailNode = numberNode
                 }
                 
                 nextOpNode = findNextOperatorNodeFrom(numberNode)
+                continue
             }
-            else{//evaluate fail
-                
-                fatalError("evaluate fail")
-            }
-
+            
+            nextOpNode = findNextOperatorNodeFrom(nextOpNode!)
         }
     }
     
@@ -149,7 +169,7 @@ class Brain {
     ///traverse back to parent
     private func findNextOperatorNodeFrom(_ node:Node) -> OperatorNode?{
         
-        var nextNode : Node? = node
+        var nextNode : Node? = node.parentNode
         
         while(nextNode != nil){
             
