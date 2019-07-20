@@ -19,7 +19,7 @@ class Brain {
         reset()
     }
     
-    func inputNumberNode(_ newNode:NumberNode, _ completeHandler:(Node)->()){
+    func inputNumberNode(_ newNode:NumberNode, _ completeHandler:(NumberNode)->()){
         
         //try to merge node first, if it fail then try to append node
         //to list
@@ -27,21 +27,24 @@ class Brain {
             
             //merge successful
             logAllNodes()
+            completeHandler(findLastNumberNode()!)
             
         }, appendHandler: { (node) in
             
             appendNodeToTailNode(node)
             
             logAllNodes()
+            completeHandler(findLastNumberNode()!)
             
         }, replaceHandler: { (node) in
           
             replaceTailNodeWithNode(node)
+            completeHandler(findLastNumberNode()!)
         })
         
     }
     
-    func inputDecimalNode(_ newNode:DecimalNode, _ completeHandler:(Node)->()){
+    func inputDecimalNode(_ newNode:DecimalNode, _ completeHandler:(NumberNode)->()){
         
         //try to merge node first, if it fail then try to append node
         //to list
@@ -49,24 +52,28 @@ class Brain {
             
             //merge successful
             logAllNodes()
+            completeHandler(findLastNumberNode()!)
             
         }, appendHandler: { (node) in
             
             //DecimalNode should not be append to list
+            completeHandler(findLastNumberNode()!)
             
         }, replaceHandler: { (node) in
             
             //DecimalNode should not replace any node in list
+            completeHandler(findLastNumberNode()!)
         })
         
     }
     
-    func inputOperatorNode(_ newNode:OperatorNode, _ completeHandler:(Node)->()){
+    func inputOperatorNode(_ newNode:OperatorNode, _ completeHandler:(NumberNode)->()){
         
         //try to merge node first, if it fail then try to append node
         //to list
         tailNode?.mergeWithNode(newNode, completeHandler: { (selfNode) in
             
+            completeHandler(findLastNumberNode()!)
             
         }, appendHandler: { (node) in
             
@@ -78,6 +85,7 @@ class Brain {
             }
             
             evaluateNodesWithPriority(opNode.operatorPriority())
+            completeHandler(findLastNumberNode()!)
 
         }, replaceHandler: { (node) in
             
@@ -89,10 +97,11 @@ class Brain {
             }
             
             evaluateNodesWithPriority(opNode.operatorPriority())
+            completeHandler(findLastNumberNode()!)
         })
     }
     
-    func resetBrain(_ completeHandler:(Node)->()){
+    func resetBrain(_ completeHandler:(NumberNode)->()){
         
         guard let tail = tailNode else{
             
@@ -112,7 +121,7 @@ class Brain {
         
         reset()
         
-        completeHandler(tailNode!)
+        completeHandler(findLastNumberNode()!)
         
         print("Brain reset \(tailNode!.valueInString())")
     }
@@ -208,7 +217,7 @@ class Brain {
         return nil
     }
     
-    func calculate(_ completeHandler:(Node)->()){
+    func calculate(_ completeHandler:(NumberNode)->()){
         
         if let opNode = tailNode as? OperatorNode{
             
@@ -234,6 +243,8 @@ class Brain {
         }
         
         logAllNodes()
+        
+        completeHandler(findLastNumberNode()!)
     }
     
     

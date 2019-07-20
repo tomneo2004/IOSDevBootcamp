@@ -31,21 +31,23 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
         print("Model deinit")
     }
     
-    func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (Node) -> ()) {
+    func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (String) -> ()) {
         
-        Brain.sharedBrain.inputNumberNode(NumberNode.NumberNodeFromString(numberString)) { (result) in
+        Brain.sharedBrain.inputNumberNode(NumberNode.NumberNodeFromString(numberString)) { (numberNode) in
             
+            completeHandler(numberNode.valueInString())
         }
     }
     
-    func appendDecimalSymbol(_ completeHandler: (Node) -> ()) {
+    func appendDecimalSymbol(_ completeHandler: (String) -> ()) {
         
-        Brain.sharedBrain.inputDecimalNode(DecimalNode()) { (result) in
+        Brain.sharedBrain.inputDecimalNode(DecimalNode()) { (numberNode) in
             
+            completeHandler(numberNode.valueInString())
         }
     }
     
-    func appendOperatorWith(_ operatorString: String, _ completeHandler: (Node) -> ()) {
+    func appendOperatorWith(_ operatorString: String, _ completeHandler: (String) -> ()) {
         
         let opType = operatorGroup[operatorString]
         
@@ -58,22 +60,25 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
             fatalError("create operator from \(operatorString) fail, operator probably not defined")
         }
         
-        Brain.sharedBrain.inputOperatorNode(newOperator) { (result) in
+        Brain.sharedBrain.inputOperatorNode(newOperator) { (numberNode) in
             
+            completeHandler(numberNode.valueInString())
         }
     }
     
-    func clearAll(_ completeHandler: (Node) -> ()) {
+    func clearAll(_ completeHandler: (String) -> ()) {
         
-        Brain.sharedBrain.resetBrain { (result) in
+        Brain.sharedBrain.resetBrain { (numberNode) in
             
+            completeHandler(numberNode.valueInString())
         }
     }
     
-    func calculateResult(_ completeHandler: (Node) -> ()) {
+    func calculateResult(_ completeHandler: (String) -> ()) {
         
-        Brain.sharedBrain.calculate { (node) in
+        Brain.sharedBrain.calculate { (numberNode) in
             
+            completeHandler(numberNode.valueInString())
         }
     }
 

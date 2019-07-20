@@ -18,21 +18,23 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
         print("Controller deinit")
     }
     
-    func onDigitalNumberPress(_ numberString: String) {
+    func onDigitalNumberPress(_ digitString: String) {
         
         //tell model to append a number
-        MVC_Model.appendDigitalNumberWith(numberString) { (node) in
+        MVC_Model.appendDigitalNumberWith(digitString) { (numberString) in
             
             //TODO:tell view update UI with result
+            MVC_View.updateCalculatorDisplay(result: numberString)
         }
     }
     
     func onDecimalPress() {
         
         //tell model to append a decimal
-        MVC_Model.appendDecimalSymbol { (node) in
+        MVC_Model.appendDecimalSymbol { (numberString) in
             
             //TODO:tell view update UI with result
+            MVC_View.updateCalculatorDisplay(result: numberString)
         }
     }
     
@@ -40,27 +42,30 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
         
         //tell model to append a operator
         
-        MVC_Model.appendOperatorWith(operatorString) { (node) in
+        MVC_Model.appendOperatorWith(operatorString) { (numberString) in
             
             //TODO:tell view update UI with result
+            MVC_View.updateCalculatorDisplay(result: numberString)
         }
     }
     
     func onClearPress() {
         
         //tell model to clear all
-        MVC_Model.clearAll { (node) in
+        MVC_Model.clearAll { (numberString) in
             
             //TODO:tell view update UI with result
+            MVC_View.updateCalculatorDisplay(result: numberString)
         }
     }
     
     func onCalculatePress() {
         
         //tell model to calculate
-        MVC_Model.calculateResult { (node) in
+        MVC_Model.calculateResult { (numberString) in
             
             //TODO:tell view update UI with result
+            MVC_View.updateCalculatorDisplay(result: numberString)
         }
     }
 }

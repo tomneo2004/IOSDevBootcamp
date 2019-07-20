@@ -27,24 +27,25 @@ protocol CalculatorViewToControllerProtocol : class{
 
 protocol CalculatorControllerToViewProtocol : class{
     
+    func updateCalculatorDisplay(result : String)
 }
 
 protocol CalculatorControllerToModelProtocol : class{
     
     ///append a digital number
-    func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(Node)->())
+    func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(String)->())
     
     ///append a decimal to digital
-    func appendDecimalSymbol(_ completeHandler:(Node)->())
+    func appendDecimalSymbol(_ completeHandler:(String)->())
     
     ///append a operator
-    func appendOperatorWith(_ operatorString:String, _ completeHandler:(Node)->())
+    func appendOperatorWith(_ operatorString:String, _ completeHandler:(String)->())
     
     ///clear all
-    func clearAll(_ completeHandler:(Node)->())
+    func clearAll(_ completeHandler:(String)->())
     
     ///calculate final result
-    func calculateResult(_ completeHandler:(Node)->())
+    func calculateResult(_ completeHandler:(String)->())
 }
 
 protocol CalculatorModelToControllerProtocol : class{
