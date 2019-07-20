@@ -14,27 +14,18 @@ fileprivate func log10(value:Double) -> Double{
 
 class NumberNode: Node {
     
-    ///Return a value in decimal
+    ///Return a real value in decimal
     var value : Decimal{
         get{
-            return Decimal(wholeNumber) + fractionNumber
+            return (Decimal(wholeNumber) + fractionNumber) * Decimal(valueOfSign)
         }
     }
-    
-//    private var valueSign : Decimal{
-//        get{
-//            return value < Decimal.zero ? Decimal(sign: .minus, exponent: 0, significand: 1) : Decimal(sign: .plus, exponent: 0, significand: 1)
-//        }
-//    }
-    
-    ///is number a decimal or integer
-    private var isDecimal : Bool = false
     
     ///return value in string for display
     private var displayableValue : String{
         get{
             //nagetive sign or positive
-            var result = wholeNumber < 0 || fractionNumber < 0.0 ? "-" : ""
+            var result = stringOfSign
             
             result += String(wholeNumber.magnitude)
             
@@ -47,12 +38,9 @@ class NumberNode: Node {
                     
                     //extract fraction part where is after decimal
                     let absFractionNumber = fractionNumber.magnitude
-//                    let fractions = "\(absFractionNumber)".split(separator: ".")
-//                    var fractionStr = fractions.count > 1 ? fractions[1] : ""
                     var fractionStr = absFractionNumber.fractionPartInString()
                     
                     //how long is fraction part
-//                    let fractionLength = fractionStr.count
                     let fractionLength = absFractionNumber.fractionLength()
                     
                     //find number of empty space between fractionOffset
@@ -77,12 +65,29 @@ class NumberNode: Node {
         }
     }
     
+    ///sign of number
+    private var sign : FloatingPointSign = .plus
+    
+    ///value of sign either 1 or -1
+    private var valueOfSign : Int{
+        return sign == FloatingPointSign.plus ? 1 : -1
+    }
+    
+    ///sign in string either "" or "-"
+    private var stringOfSign : String{
+        
+        return sign == FloatingPointSign.plus ? "" : "-"
+    }
+    
     ///hold part of whole number
     private var wholeNumber : Int = 0
     
     ///offset of whole number e.g 123 offset is 3
     ///if whole number is 0 offset will be 0
     private var wholeOffset : Int = 0
+    
+    ///is number a decimal or integer
+    private var isDecimal : Bool = false
     
     ///hold part of fraction number
     ///use decmial to be more precise
@@ -97,11 +102,22 @@ class NumberNode: Node {
     
     
     //MAKR: - init
+    ///convenient way to create a NumberNode
+    ///
+    ///init will decompose value in decimal you given and turn it into
+    ///value NumberNode needed. NumberNode have 3 components Sign, WholeNumber
+    ///and FractionNumber
+    ///
+    ///Sign: is either negative or positive
+    ///
+    ///WholeNumber: is where NumberNode store integer part
+    ///
+    ///FracionNumber is where NumberNode store decimal part
     convenience init(_ inValue : Decimal) {
         self.init()
         
         //sign
-        let sign = inValue < Decimal(0.0) ? Decimal(-1.0) : Decimal(1.0)
+        self.sign = inValue < Decimal(0.0) ? .minus : .plus
         
         //get absolute value
         let absValue = inValue.magnitude
@@ -146,12 +162,6 @@ class NumberNode: Node {
             isDecimal = true
         }
         
-        //apply sign
-        wholeNumber *= sign.signInt()
-        fractionNumber  = fractionNumber * sign.signDecimal()
-        
-        print("whole offset: \(wholeOffset), fraction offset: \(fractionOffset)")
-        
     }
     
     //MARK: - override from parent
@@ -182,7 +192,7 @@ class NumberNode: Node {
                 let absWholeNumber = wholeNumber.magnitude
                 newWholeNumber = Int(absWholeNumber * 10 + UInt(numberNode.value.doubleValue()))
                 
-                wholeNumber = newWholeNumber * value.signInt()
+                wholeNumber = newWholeNumber
             }
             else{ //if this number's value is decimal
                 
@@ -192,7 +202,7 @@ class NumberNode: Node {
                 let newFraction = numberNode.value / pow(Decimal(10.0), fractionOffset)
                 newFractionNumber  = absFractionNumber + newFraction
                 
-                fractionNumber = newFractionNumber * value.signDecimal()
+                fractionNumber = newFractionNumber
             }
             
             completeHandler(self)
@@ -230,8 +240,10 @@ class NumberNode: Node {
     }
 }
 
+//MARK: - extension to NumberNode
 extension NumberNode{
     
+    //An easy way to create NumberNode from string
     static func NumberNodeFromString(_ numStr : String) -> NumberNode{
         
         guard let decimalNum = Decimal(string: numStr) else{
@@ -241,25 +253,41 @@ extension NumberNode{
         
         return NumberNode(decimalNum)
     }
+    
+    ///Invert sign of this NumberNode
+    func invertSign(){
+        sign = sign == .plus ? .minus : .plus
+    }
 }
 
 
 //MARK: - extension to Decimal
 extension Decimal{
     
-    ///extension to decimal to return double value
+    ///extension to decimal
+    ///
+    ///return double value
     func doubleValue()->Double{
         return NSDecimalNumber(decimal: self).doubleValue
     }
     
+    ///extension to decimal
+    ///
+    ///return strin value
     func stringValue()->String{
         return NSDecimalNumber(decimal: self).stringValue
     }
     
+    ///extension to decimal
+    ///
+    ///return true if decimal only have integer part otherwise false
     func isInteger() -> Bool{
         return self.exponent >= 0
     }
     
+    ///extension to decimal
+    ///
+    ///return decimal that been floored
     func roundDown() -> Decimal{
         var floorDecimal = Decimal()
         var thisDecimal = self
@@ -267,10 +295,16 @@ extension Decimal{
         return floorDecimal
     }
     
+    ///extension to decimal
+    ///
+    ///return integer part of decimal
     func integerPart() -> Int{
         return NSDecimalNumber(decimal: self).intValue
     }
     
+    ///extension to decimal
+    ///
+    ///return fraction part of decimal
     func fractionPart() -> Decimal{
         
         let floorDecimal = self.roundDown()
@@ -279,10 +313,19 @@ extension Decimal{
         return fraction
     }
     
+    ///extension to decimal
+    ///
+    ///return how many places in fraction part in decimal
     func fractionLength() -> Int{
         return self.exponent < 0 ? Int(self.exponent.magnitude) : 0
     }
     
+    ///extension to decimal
+    ///
+    ///return string that represent fraction part of decimal
+    ///only the part after decimal
+    ///
+    ///e.g 0.123 return "123"
     func fractionPartInString() -> String{
         
         if self.fractionLength() > 0{
@@ -293,11 +336,19 @@ extension Decimal{
         return ""
     }
     
+    ///extension to decimal
+    ///
+    ///return the sign in integer of decimal
+    ///either -1 or 1
     func signInt() -> Int{
         
         return self < Decimal.zero ? -1 : 1
     }
     
+    ///extension to decimal
+    ///
+    ///return the sign in decimal
+    ///either -1(Decimal) or 1(Decimal)
     func signDecimal() -> Decimal{
         
         return self < Decimal.zero ? Decimal(sign: .minus, exponent: 0, significand: 1) : Decimal(sign: .plus, exponent: 0, significand: 1)

@@ -52,23 +52,16 @@ class InvertNode: OperatorNode {
         
         if let numberNode = leftHandNode as? NumberNode{
             
-            //calcualte value
-            let value = numberNode.value * Decimal(sign: .minus, exponent: 0, significand: 1)
+            //inverse sign of number node
+            numberNode.invertSign()
             
-            //result
-            let result = NumberNode(value)
-            
-            //deal with nodes
-            result.parentNode = leftHandNode.parentNode
-            result.childNode = childNode
-            
-            //we need to drop connection of nodes that was involved in calculation
-            leftHandNode.dropConnection()
+            //make left hand's child node as my child node
+            numberNode.childNode = self.childNode
             
             //drop our connection
             self.dropConnection()
             
-            return result
+            return numberNode
         }
         
         fatalError("Invert node's parent node is not a number node")
