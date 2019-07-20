@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ContrastNode: OperatorNode {
+class InvertNode: OperatorNode {
     
     
     override func mergeWithNode(_ node:Node,
@@ -47,23 +47,31 @@ class ContrastNode: OperatorNode {
     override func evaluate() -> NumberNode? {
         
         guard let leftHandNode = self.parentNode else{
-            fatalError("Contrast node must have parent node")
+            fatalError("Invert node must have parent node")
         }
         
         if let numberNode = leftHandNode as? NumberNode{
             
-            let value = numberNode.value * Decimal(-1.0)
-            let result = NumberNode(value.doubleValue())
+            //calcualte value
+            let value = numberNode.value * Decimal(sign: .minus, exponent: 0, significand: 1)
+            
+            //result
+            let result = NumberNode(value)
+            
+            //deal with nodes
             result.parentNode = leftHandNode.parentNode
             result.childNode = childNode
             
+            //we need to drop connection of nodes that was involved in calculation
             leftHandNode.dropConnection()
+            
+            //drop our connection
             self.dropConnection()
             
             return result
         }
         
-        fatalError("Contrast node's parent node is not a number node")
+        fatalError("Invert node's parent node is not a number node")
     }
     
     override func operatorType() -> OperatorType {

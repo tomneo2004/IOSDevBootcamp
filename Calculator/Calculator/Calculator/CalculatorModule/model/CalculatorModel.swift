@@ -11,7 +11,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     private let operatorGroup : [String:OperatorNode.Type] = [
         
-        "+/-": ContrastNode.self
+        "+/-": InvertNode.self
     ]
     
     
@@ -27,7 +27,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
     func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (Node) -> ()) {
         
-        Brain.sharedBrain.inputNumberNode(NumberNode(Double(numberString)!)) { (result) in
+        Brain.sharedBrain.inputNumberNode(NumberNode.NumberNodeFromString(numberString)) { (result) in
             
         }
     }

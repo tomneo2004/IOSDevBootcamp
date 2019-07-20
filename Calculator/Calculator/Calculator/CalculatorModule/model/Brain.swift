@@ -63,13 +63,17 @@ class Brain {
         }, appendHandler: { (node) in
             
             appendNodeToTailNode(node)
+            print("\nbefore evaluation")
             logAllNodes()
             guard let opNode = tailNode as? OperatorNode else{
                 fatalError("append operator node at tail but tail is not operator node")
             }
             
             evaluateNodesWithPriority(opNode.operatorPriority())
+            
+            print("\nafter evaluation:")
             logAllNodes()
+            
             
             
         }, replaceHandler: { (node) in
@@ -162,7 +166,7 @@ class Brain {
     
     
     ///reset brain to initial state
-    private func reset(_ value:Double = 0.0){
+    private func reset(_ value : Decimal = Decimal.zero){
         
         tailNode = NumberNode(value)
     }
@@ -171,14 +175,13 @@ class Brain {
         
         guard let tail = tailNode else{
             
-            print("tail node is nil")
-            return
+            fatalError("tail node is nil")
         }
         
         var nextNode : Node? = tail
         var log = ""
         while(nextNode != nil){
-            log = nextNode!.valueInString()+log
+            log = " "+nextNode!.valueInString()+log
             nextNode = nextNode?.parentNode
         }
         

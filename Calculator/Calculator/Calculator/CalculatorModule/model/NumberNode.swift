@@ -8,6 +8,10 @@
 
 import Foundation
 
+fileprivate func log10(value:Double) -> Double{
+    return log(value) / log(10.0)
+}
+
 class NumberNode: Node {
     
     ///Return a value in decimal
@@ -17,11 +21,11 @@ class NumberNode: Node {
         }
     }
     
-    private var valueSign : Double{
-        get{
-            return value < 0.0 ? -1.0 : 1.0
-        }
-    }
+//    private var valueSign : Decimal{
+//        get{
+//            return value < Decimal.zero ? Decimal(sign: .minus, exponent: 0, significand: 1) : Decimal(sign: .plus, exponent: 0, significand: 1)
+//        }
+//    }
     
     ///is number a decimal or integer
     private var isDecimal : Bool = false
@@ -43,11 +47,13 @@ class NumberNode: Node {
                     
                     //extract fraction part where is after decimal
                     let absFractionNumber = fractionNumber.magnitude
-                    let fractions = "\(absFractionNumber)".split(separator: ".")
-                    var fractionStr = fractions.count > 1 ? fractions[1] : ""
+//                    let fractions = "\(absFractionNumber)".split(separator: ".")
+//                    var fractionStr = fractions.count > 1 ? fractions[1] : ""
+                    var fractionStr = absFractionNumber.fractionPartInString()
                     
                     //how long is fraction part
-                    let fractionLength = fractionStr.count
+//                    let fractionLength = fractionStr.count
+                    let fractionLength = absFractionNumber.fractionLength()
                     
                     //find number of empty space between fractionOffset
                     //and fraction current length
@@ -87,23 +93,24 @@ class NumberNode: Node {
     private var fractionOffset : Int = 0
     
     ///max digitals this number can hold
-    private let maxDigitals = 16
+    private let maxDigits = 16
     
     
     //MAKR: - init
-    convenience init(_ inValue : Double) {
+    convenience init(_ inValue : Decimal) {
         self.init()
         
         //sign
-        let sign = inValue < 0.0 ? -1 : 1
+        let sign = inValue < Decimal(0.0) ? Decimal(-1.0) : Decimal(1.0)
         
         //get absolute value
         let absValue = inValue.magnitude
         
         //is value an integer
-        let isInt = floor(absValue) == absValue
+        let isInt = inValue.isInteger()
         
-        wholeNumber = Int(floor(absValue))
+        //get whole part
+        wholeNumber = absValue.roundDown().integerPart()
         
         //if whole number is not 0 then find out wholeOffset
         if wholeNumber != 0{
@@ -114,7 +121,8 @@ class NumberNode: Node {
             //floor down number
             //Example 123456 after log base of 10 will be 5
             //because it is 6 digitals so shuold plus 1
-            wholeOffset = Int( floor((log(Double(wholeNumber)))) )+1
+
+            wholeOffset = Int( floor(log10(Double(wholeNumber))) )+1
         }
         else{
             wholeOffset = 0
@@ -129,17 +137,20 @@ class NumberNode: Node {
         }
         else{// it is decimal
             
-            fractionNumber = Decimal(absValue - Double(wholeNumber))
+            //get fraction part
+            fractionNumber = absValue.fractionPart()
             
             //find out fraction offset
-            let fractionLength = "\(fractionNumber)".split(separator: ".")[1].count
+            let fractionLength = fractionNumber.fractionLength()
             fractionOffset = fractionLength
             isDecimal = true
         }
         
         //apply sign
-        wholeNumber *= sign
-        fractionNumber  = fractionNumber * Decimal(Double(sign))
+        wholeNumber *= sign.signInt()
+        fractionNumber  = fractionNumber * sign.signDecimal()
+        
+        print("whole offset: \(wholeOffset), fraction offset: \(fractionOffset)")
         
     }
     
@@ -155,7 +166,9 @@ class NumberNode: Node {
             
             //if digitals over or equal max
             //dot not allow more digitals
-            if wholeOffset + fractionOffset >= maxDigitals{
+            if wholeOffset + fractionOffset >= maxDigits{
+                print("\nNumberNode digits reach max")
+                print("number of current digits \(wholeOffset+fractionOffset) in \(maxDigits)")
                 completeHandler(self)
                 return
             }
@@ -164,12 +177,12 @@ class NumberNode: Node {
             //we deal with whole number
             if !isDecimal{
                 
+                wholeOffset += 1
                 var newWholeNumber = wholeNumber
                 let absWholeNumber = wholeNumber.magnitude
-                wholeOffset += 1
                 newWholeNumber = Int(absWholeNumber * 10 + UInt(numberNode.value.doubleValue()))
                 
-                wholeNumber = newWholeNumber * Int(valueSign)
+                wholeNumber = newWholeNumber * value.signInt()
             }
             else{ //if this number's value is decimal
                 
@@ -179,12 +192,10 @@ class NumberNode: Node {
                 let newFraction = numberNode.value / pow(Decimal(10.0), fractionOffset)
                 newFractionNumber  = absFractionNumber + newFraction
                 
-                fractionNumber = newFractionNumber * Decimal(valueSign)
+                fractionNumber = newFractionNumber * value.signDecimal()
             }
             
             completeHandler(self)
-            
-            print("current digits \(wholeOffset + fractionOffset) of \(maxDigitals)")
             
             return
         }
@@ -219,6 +230,19 @@ class NumberNode: Node {
     }
 }
 
+extension NumberNode{
+    
+    static func NumberNodeFromString(_ numStr : String) -> NumberNode{
+        
+        guard let decimalNum = Decimal(string: numStr) else{
+            
+            fatalError("\(numStr) can not convert to decimal")
+        }
+        
+        return NumberNode(decimalNum)
+    }
+}
+
 
 //MARK: - extension to Decimal
 extension Decimal{
@@ -226,5 +250,56 @@ extension Decimal{
     ///extension to decimal to return double value
     func doubleValue()->Double{
         return NSDecimalNumber(decimal: self).doubleValue
+    }
+    
+    func stringValue()->String{
+        return NSDecimalNumber(decimal: self).stringValue
+    }
+    
+    func isInteger() -> Bool{
+        return self.exponent >= 0
+    }
+    
+    func roundDown() -> Decimal{
+        var floorDecimal = Decimal()
+        var thisDecimal = self
+        NSDecimalRound(&floorDecimal, &thisDecimal, 0, .down)
+        return floorDecimal
+    }
+    
+    func integerPart() -> Int{
+        return NSDecimalNumber(decimal: self).intValue
+    }
+    
+    func fractionPart() -> Decimal{
+        
+        let floorDecimal = self.roundDown()
+        let fraction = self - floorDecimal
+        
+        return fraction
+    }
+    
+    func fractionLength() -> Int{
+        return self.exponent < 0 ? Int(self.exponent.magnitude) : 0
+    }
+    
+    func fractionPartInString() -> String{
+        
+        if self.fractionLength() > 0{
+            let fractionPart = self.fractionPart().stringValue().split(separator: ".")[1]
+            return String(fractionPart)
+        }
+        
+        return ""
+    }
+    
+    func signInt() -> Int{
+        
+        return self < Decimal.zero ? -1 : 1
+    }
+    
+    func signDecimal() -> Decimal{
+        
+        return self < Decimal.zero ? Decimal(sign: .minus, exponent: 0, significand: 1) : Decimal(sign: .plus, exponent: 0, significand: 1)
     }
 }

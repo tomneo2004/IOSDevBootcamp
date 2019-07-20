@@ -43,7 +43,7 @@ class Node : NodeProtocol{
     }
     
     deinit {
-        print("node removed")
+        //print("node removed")
     }
     
     ///remove node's parent and child
