@@ -294,7 +294,9 @@ extension Decimal{
     ///
     ///return integer part of decimal
     func integerPart() -> Int{
-        return NSDecimalNumber(decimal: self).intValue
+//        return NSDecimalNumber(decimal: self).intValue
+        let sign = self < Decimal(0.0) ? Decimal(-1) : Decimal(1)
+        return NSDecimalNumber(decimal: self.magnitude.roundDown() * sign).intValue
     }
     
     ///extension to decimal
