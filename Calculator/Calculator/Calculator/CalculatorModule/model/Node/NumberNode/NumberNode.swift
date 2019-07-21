@@ -350,4 +350,66 @@ extension Decimal{
         
         return self < Decimal.zero ? Decimal(sign: .minus, exponent: 0, significand: 1) : Decimal(sign: .plus, exponent: 0, significand: 1)
     }
+    
+    ///extension to decimal
+    ///
+    ///return decimal that has been trimed
+    func trimToLength(_ len:UInt) -> Decimal{
+        
+        if self == Decimal(0.0){
+            return self
+        }
+        
+        let sign = self < Decimal(0.0) ? Decimal(-1.0) : Decimal(1.0)
+        let cLen = self.fractionLength()
+        
+        if cLen >= len{
+            
+            let decimalPartStr = self.magnitude.fractionPart().stringValue()
+            let range = ..<decimalPartStr.index(decimalPartStr.endIndex, offsetBy: Int(len) - cLen)
+            let trimStr = decimalPartStr[range]
+            
+            guard let trimDecimal = Decimal(string: String(trimStr)) else{
+                
+                fatalError("Trim decimal fail")
+            }
+            
+            return trimDecimal * sign
+        }
+        
+        fatalError("Fraction length is \(cLen) can not trim to \(len)")
+    }
+}
+
+//MARK: - extension to Int
+extension Int{
+    
+    ///extension to Int
+    ///
+    ///return length of Int
+    func intLength() -> Int{
+        return Int( floor(log10(Double(self.magnitude))) )+1
+    }
+    
+    ///extension to Int
+    ///
+    ///return Int that has been trimed
+    func trimToLength(_ len:UInt) -> Int{
+        
+        if self == 0{
+            return self
+        }
+        
+        let sign =  self < 0 ? -1 : 1
+        let cLen = self.intLength()
+        
+        if cLen >= len{
+            
+            let trim = Decimal(sign: .plus, exponent: (cLen - Int(len)) * -1, significand: Decimal(self.magnitude))
+            let intPart = trim.integerPart()
+            return intPart * sign
+        }
+        
+        fatalError("Integer length is \(cLen) can not trim to \(len)")
+    }
 }
