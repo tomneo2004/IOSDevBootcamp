@@ -1,0 +1,19 @@
+{
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "commitish" : "3.0.3",
+  "iOS" : [
+    {
+      "name" : "RestKit",
+      "hash" : "a44a6cbae4b0759939b23502e1faef0329a83508cee1f246f04d78ccd12295ee",
+      "swiftToolchainVersion" : "5.0.1 (swiftlang-1001.0.82.4 clang-1001.0.46.5)"
+    }
+  ]
+}
