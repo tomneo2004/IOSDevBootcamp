@@ -13,13 +13,13 @@ protocol NodeProtocol {
     ///merge this node with different node
     ///
     ///completeHandler call when merge successful or given node has been absorb by node you called on
-    ///return a node is the node you called on
+    ///and it return a node which is the node you called on
     ///
-    ///appendHandler call when merge fail and given node should be append to list.
-    ///return a node you give
+    ///appendHandler call when merge fail and recommend to add given node to list.
+    ///return a node which you given
     ///
-    ///replaceHandler call when merge fail and given node should replace node you called on
-    ///return a node you give
+    ///replaceHandler call when merge fail and recommend to replace current node with node you given
+    ///return a node which you given
     func mergeWithNode(_ node:Node,
                        completeHandler:(Node)->(),
                        appendHandler:(Node)->(),

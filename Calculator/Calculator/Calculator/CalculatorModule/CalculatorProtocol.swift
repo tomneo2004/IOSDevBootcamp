@@ -12,33 +12,34 @@ protocol CalculatorViewToControllerProtocol : class{
     ///when user press digital button
     func onDigitalNumberPress(_ numberString:String)
     
-    //when user press decimal button
+    ///when user press decimal button
     func onDecimalPress()
     
-    //when user press operator button
+    ///when user press operator button
     func onOperatorPress(_ operatorString:String)
     
-    //when user press clear button
+    ///when user press clear button
     func onClearPress()
     
-    //when user press calculate button
+    ///when user press calculate button
     func onCalculatePress()
 }
 
 protocol CalculatorControllerToViewProtocol : class{
     
+    ///update view
     func updateCalculatorDisplay(result : String)
 }
 
 protocol CalculatorControllerToModelProtocol : class{
     
-    ///append a digital number
+    ///add a digital number
     func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(String)->())
     
-    ///append a decimal to digital
+    ///add a decimal to digital
     func appendDecimalSymbol(_ completeHandler:(String)->())
     
-    ///append a operator
+    ///add a operator
     func appendOperatorWith(_ operatorString:String, _ completeHandler:(String)->())
     
     ///clear all

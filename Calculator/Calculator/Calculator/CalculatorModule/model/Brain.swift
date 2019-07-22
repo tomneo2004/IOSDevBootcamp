@@ -10,8 +10,10 @@ import Foundation
 
 class Brain {
     
+    ///get default Brain
     static let sharedBrain : Brain = Brain()
     
+    ///tail node which point to last node in list
     private var tailNode : Node?
     
     init() {
@@ -19,6 +21,7 @@ class Brain {
         reset()
     }
     
+    ///give NumberNode when a mathmatical number 0~9 need to be inputed to Brain
     func inputNumberNode(_ newNode:NumberNode, _ completeHandler:(NumberNode)->()){
         
         //try to merge node first, if it fail then try to append node
@@ -44,6 +47,7 @@ class Brain {
         
     }
     
+    ///give DecimalNode when a mathmatical decimal need to be inputed to Brain
     func inputDecimalNode(_ newNode:DecimalNode, _ completeHandler:(NumberNode)->()){
         
         //try to merge node first, if it fail then try to append node
@@ -67,6 +71,7 @@ class Brain {
         
     }
     
+    ///give OperatorNode when a mathmatical operator need to be inputed to Brain
     func inputOperatorNode(_ newNode:OperatorNode, _ completeHandler:(NumberNode)->()){
         
         //try to merge node first, if it fail then try to append node
@@ -101,6 +106,7 @@ class Brain {
         })
     }
     
+    ///reset Brain to inital state
     func resetBrain(_ completeHandler:(NumberNode)->()){
         
         guard let tail = tailNode else{
@@ -126,11 +132,52 @@ class Brain {
         print("Brain reset \(tailNode!.valueInString())")
     }
     
-    ///Call this when new operator append
+    ///Calculate
+    func calculate(_ completeHandler:(NumberNode)->()){
+        
+        if let opNode = tailNode as? OperatorNode{
+            
+            //if tail node is double input operator
+            if opNode.operatorType() == .DoubleInput{
+                
+                //get last number node
+                guard let lastNumberNode = findLastNumberNode() else{
+                    fatalError("No NumberNode in operation sentence")
+                }
+                
+                //create new number node with last number node's value
+                let newNumberNode = NumberNode(lastNumberNode.value)
+                
+                //append to tail node
+                appendNodeToTailNode(newNumberNode)
+            }
+        }
+        
+        for priority in operatorPriorities{
+            
+            evaluateNodesWithPriority(priority)
+        }
+        
+        logAllNodes()
+        
+        completeHandler(findLastNumberNode()!)
+    }
+ 
+}
+
+//MARK: - extension for Brain
+extension Brain {
+    
+    ///evaluate each OperatorNode in list with priority
+    ///
+    ///any OperatorNode has lower than given priority will be
+    ///ignored
+    ///
+    ///Recommend to call this method after an OperatorNode has been add to list
     private func evaluateNodesWithPriority(_ priority:OperatorPriority){
         
         guard let tail = tailNode else{
-           return
+            return
         }
         
         print("\nbefore evaluation")
@@ -200,6 +247,7 @@ class Brain {
         return nil
     }
     
+    ///method that can find last NumberNode in list
     func findLastNumberNode() -> NumberNode?{
         
         if let tail = tailNode{
@@ -217,43 +265,15 @@ class Brain {
         return nil
     }
     
-    func calculate(_ completeHandler:(NumberNode)->()){
-        
-        if let opNode = tailNode as? OperatorNode{
-            
-            //if tail node is double input operator
-            if opNode.operatorType() == .DoubleInput{
-                
-                //get last number node
-                guard let lastNumberNode = findLastNumberNode() else{
-                    fatalError("No NumberNode in operation sentence")
-                }
-                
-                //create new number node with last number node's value
-                let newNumberNode = NumberNode(lastNumberNode.value)
-                
-                //append to tail node
-                appendNodeToTailNode(newNumberNode)
-            }
-        }
-        
-        for priority in operatorPriorities{
-            
-            evaluateNodesWithPriority(priority)
-        }
-        
-        logAllNodes()
-        
-        completeHandler(findLastNumberNode()!)
-    }
-    
-    
     ///reset brain to initial state
+    ///which is jsut a NumberNode with zero value
     private func reset(_ value : Decimal = Decimal.zero){
         
         tailNode = NumberNode(value)
     }
     
+    ///method which can print arithmetic sentence
+    ///mainly for debug purpose
     private func logAllNodes(){
         
         guard let tail = tailNode else{
@@ -271,8 +291,8 @@ class Brain {
         print("Operation sentence: \(log)")
     }
     
-    //conect tail node to new node and make tail node
-    //point to new node
+    ///append a new Node to tail node and
+    ///making tail node point to new Node
     private func appendNodeToTailNode(_ newNode:Node){
         
         if let tail = tailNode{
@@ -281,8 +301,7 @@ class Brain {
                 
                 newNode.parentNode = tailNode
                 tailNode?.childNode = newNode
-                
-                
+
             }
         }
         
@@ -290,7 +309,8 @@ class Brain {
         tailNode = newNode
     }
     
-    ///make brain's tail node point to new node
+    ///remove tail node's Node and making tail node point to
+    ///new Node
     private func replaceTailNodeWithNode(_ newNode:Node){
         
         //if tail node not nil
@@ -314,6 +334,13 @@ class Brain {
         tailNode = newNode
     }
     
+    ///replace a Node with another Node in list
+    ///
+    ///do not call this method directly, except OperatorNode
+    ///
+    ///if includeParent is true then parent node of Node that will be removed will be removed as well
+    ///
+    ///if includeChild is true then child node of Node that will be removed will be removed as well
     func replaceNode(_ node:Node, _ withNode:Node, _ includeParent:Bool = false, _ includeChild:Bool = false){
         
         withNode.parentNode = nil
@@ -351,6 +378,7 @@ class Brain {
         node.dropConnection()
     }
     
+    ///remove a Node in list
     func removeNode(_ node:Node){
         
         let leftNode : Node? = node.parentNode

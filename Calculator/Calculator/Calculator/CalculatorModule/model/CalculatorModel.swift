@@ -9,6 +9,7 @@ import Foundation
 
 class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     
+    ///define operator table
     private let operatorGroup : [String:OperatorNode.Type] = [
         
         "+/-": InvertNode.self,
@@ -24,6 +25,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
     weak var MVC_Controller : CalculatorModelToControllerProtocol!
     
     override init() {
+        //init brain
         let _ = Brain.sharedBrain
     }
     
