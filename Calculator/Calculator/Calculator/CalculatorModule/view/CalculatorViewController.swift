@@ -10,10 +10,10 @@ import Foundation
 
 class CalculatorViewController : UIViewController, CalculatorControllerToViewProtocol{
     
-    
     var MVC_Controller : CalculatorViewToControllerProtocol!
     
     @IBOutlet weak var displayLabel: UILabel!
+    @IBOutlet weak var displaySentenceLabel: UILabel!
     
     private lazy var initModule: Void = {
         
@@ -81,9 +81,12 @@ class CalculatorViewController : UIViewController, CalculatorControllerToViewPro
         MVC_Controller.onDecimalPress()
     }
     
-    func updateCalculatorDisplay(result: String) {
+    func onUpdateCalculatorDisplay(result: String) {
         
-        print("View update \(result)")
         displayLabel.text = result
+    }
+    
+    func onUpdateCalculateSentence(result: String) {
+        displaySentenceLabel.text = result
     }
 }

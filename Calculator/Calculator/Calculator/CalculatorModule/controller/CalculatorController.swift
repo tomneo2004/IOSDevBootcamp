@@ -55,28 +55,34 @@ extension CalculatorController : CalculatorViewToControllerProtocol{
 //MARK: - CalculatorModelToControllerProtocol
 extension CalculatorController : CalculatorModelToControllerProtocol{
     
+    
     func onDigitalNumberAdded(result: String) {
         
-        MVC_View.updateCalculatorDisplay(result: result)
+        MVC_View.onUpdateCalculatorDisplay(result: result)
     }
     
     func onDecimalSymbolAdded(result: String) {
         
-        MVC_View.updateCalculatorDisplay(result: result)
+        MVC_View.onUpdateCalculatorDisplay(result: result)
     }
     
     func onOperatorAdded(result: String) {
         
-        MVC_View.updateCalculatorDisplay(result: result)
+        MVC_View.onUpdateCalculatorDisplay(result: result)
     }
     
     func onClearAll(result: String) {
         
-        MVC_View.updateCalculatorDisplay(result: result)
+        MVC_View.onUpdateCalculatorDisplay(result: result)
     }
     
     func onCalculate(result: String) {
         
-        MVC_View.updateCalculatorDisplay(result: result)
+        MVC_View.onUpdateCalculatorDisplay(result: result)
+    }
+    
+    func onNewCalculateSentence(sentence: String) {
+        
+        MVC_View.onUpdateCalculateSentence(result: sentence)
     }
 }

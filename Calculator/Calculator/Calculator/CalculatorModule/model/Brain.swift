@@ -291,6 +291,23 @@ extension Brain {
         print("Operation sentence: \(log)")
     }
     
+    func AllNodesInString()->String{
+        
+        guard let tail = tailNode else{
+            
+            fatalError("tail node is nil")
+        }
+        
+        var nextNode : Node? = tail
+        var log = ""
+        while(nextNode != nil){
+            log = nextNode!.valueInString()+log+" "
+            nextNode = nextNode?.parentNode
+        }
+        
+        return log;
+    }
+    
     ///append a new Node to tail node and
     ///making tail node point to new Node
     private func appendNodeToTailNode(_ newNode:Node){

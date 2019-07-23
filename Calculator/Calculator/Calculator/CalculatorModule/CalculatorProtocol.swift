@@ -28,7 +28,9 @@ protocol CalculatorViewToControllerProtocol : class{
 protocol CalculatorControllerToViewProtocol : class{
     
     ///update view
-    func updateCalculatorDisplay(result : String)
+    func onUpdateCalculatorDisplay(result : String)
+    
+    func onUpdateCalculateSentence(result : String)
 }
 
 protocol CalculatorControllerToModelProtocol : class{
@@ -75,4 +77,6 @@ protocol CalculatorModelToControllerProtocol : class{
     ///
     ///return a calcuate result in string
     func onCalculate(result:String)
+    
+    func onNewCalculateSentence(sentence:String)
 }

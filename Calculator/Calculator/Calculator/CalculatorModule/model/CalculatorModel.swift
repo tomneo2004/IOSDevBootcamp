@@ -42,6 +42,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
                 DispatchQueue.main.async {
                     
                     self.MVC_Controller.onDigitalNumberAdded(result: numberNode.valueInString())
+                    self.MVC_Controller.onNewCalculateSentence(sentence: Brain.sharedBrain.AllNodesInString())
                 }
                 
             }
@@ -57,6 +58,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
                 DispatchQueue.main.async {
                     
                     self.MVC_Controller.onDecimalSymbolAdded(result: numberNode.valueInString())
+                    self.MVC_Controller.onNewCalculateSentence(sentence: Brain.sharedBrain.AllNodesInString())
                 }
                 
             }
@@ -83,6 +85,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
                 Brain.sharedBrain.inputOperatorNode(newOperator) { (numberNode) in
                     
                     self.MVC_Controller.onOperatorAdded(result: numberNode.valueInString())
+                    self.MVC_Controller.onNewCalculateSentence(sentence: Brain.sharedBrain.AllNodesInString())
                 }
             }
             
@@ -99,6 +102,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
                 DispatchQueue.main.async {
                  
                     self.MVC_Controller.onClearAll(result: numberNode.valueInString())
+                    self.MVC_Controller.onNewCalculateSentence(sentence: Brain.sharedBrain.AllNodesInString())
                 }
             }
         }
@@ -114,6 +118,7 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
                 Brain.sharedBrain.calculate { (numberNode) in
                     
                     self.MVC_Controller.onCalculate(result: numberNode.valueInString())
+                    self.MVC_Controller.onNewCalculateSentence(sentence: Brain.sharedBrain.AllNodesInString())
                 }
             }
             
