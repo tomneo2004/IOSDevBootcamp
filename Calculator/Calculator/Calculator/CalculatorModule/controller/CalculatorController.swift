@@ -1,5 +1,5 @@
 //
-//  __FILEBASENAME__.swift
+//  
 //  
 //
 //  Created by Nelson on 13/7/19.
@@ -7,9 +7,7 @@
 
 import Foundation
 
-class CalculatorController : NSObject, CalculatorViewToControllerProtocol, CalculatorModelToControllerProtocol{
-
-    
+class CalculatorController : NSObject{
     
     weak var MVC_View : CalculatorControllerToViewProtocol!
     var MVC_Model : CalculatorControllerToModelProtocol!
@@ -17,55 +15,68 @@ class CalculatorController : NSObject, CalculatorViewToControllerProtocol, Calcu
     deinit {
         print("Controller deinit")
     }
+}
+
+
+//MARK: - CalculatorViewToControllerProtocol
+extension CalculatorController : CalculatorViewToControllerProtocol{
     
     func onDigitalNumberPress(_ digitString: String) {
         
-        //tell model to append a number
-        MVC_Model.appendDigitalNumberWith(digitString) { (numberString) in
-            
-            //TODO:tell view update UI with result
-            MVC_View.updateCalculatorDisplay(result: numberString)
-        }
+        //tell model to add a number
+        MVC_Model.addDigitalNumberWith(digitString)
     }
     
     func onDecimalPress() {
         
-        //tell model to append a decimal
-        MVC_Model.appendDecimalSymbol { (numberString) in
-            
-            //TODO:tell view update UI with result
-            MVC_View.updateCalculatorDisplay(result: numberString)
-        }
+        //tell model to add a decimal
+        MVC_Model.addDecimalSymbol()
     }
     
     func onOperatorPress(_ operatorString: String) {
         
-        //tell model to append a operator
-        
-        MVC_Model.appendOperatorWith(operatorString) { (numberString) in
-            
-            //TODO:tell view update UI with result
-            MVC_View.updateCalculatorDisplay(result: numberString)
-        }
+        //tell model to add a operator
+        MVC_Model.addOperatorWith(operatorString)
     }
     
     func onClearPress() {
         
         //tell model to clear all
-        MVC_Model.clearAll { (numberString) in
-            
-            //TODO:tell view update UI with result
-            MVC_View.updateCalculatorDisplay(result: numberString)
-        }
+        MVC_Model.clearAll()
     }
     
     func onCalculatePress() {
         
         //tell model to calculate
-        MVC_Model.calculateResult { (numberString) in
-            
-            //TODO:tell view update UI with result
-            MVC_View.updateCalculatorDisplay(result: numberString)
-        }
+        MVC_Model.calculateResult()
+    }
+}
+
+//MARK: - CalculatorModelToControllerProtocol
+extension CalculatorController : CalculatorModelToControllerProtocol{
+    
+    func onDigitalNumberAdded(result: String) {
+        
+        MVC_View.updateCalculatorDisplay(result: result)
+    }
+    
+    func onDecimalSymbolAdded(result: String) {
+        
+        MVC_View.updateCalculatorDisplay(result: result)
+    }
+    
+    func onOperatorAdded(result: String) {
+        
+        MVC_View.updateCalculatorDisplay(result: result)
+    }
+    
+    func onClearAll(result: String) {
+        
+        MVC_View.updateCalculatorDisplay(result: result)
+    }
+    
+    func onCalculate(result: String) {
+        
+        MVC_View.updateCalculatorDisplay(result: result)
     }
 }

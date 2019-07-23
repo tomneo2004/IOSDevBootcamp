@@ -1,5 +1,5 @@
 //
-//  __FILEBASENAME__.swift
+//
 //  
 //
 //  Created by Nelson on 13/7/19.
@@ -33,23 +33,37 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
         print("Model deinit")
     }
     
-    func appendDigitalNumberWith(_ numberString: String, _ completeHandler: (String) -> ()) {
+    func addDigitalNumberWith(_ numberString: String) {
         
-        Brain.sharedBrain.inputNumberNode(NumberNode.NumberNodeFromString(numberString)) { (numberNode) in
+        DispatchQueue.global(qos: .userInitiated).async{
             
-            completeHandler(numberNode.valueInString())
+            Brain.sharedBrain.inputNumberNode(NumberNode.NumberNodeFromString(numberString)) { (numberNode) in
+                
+                DispatchQueue.main.async {
+                    
+                    self.MVC_Controller.onDigitalNumberAdded(result: numberNode.valueInString())
+                }
+                
+            }
         }
     }
     
-    func appendDecimalSymbol(_ completeHandler: (String) -> ()) {
+    func addDecimalSymbol() {
         
-        Brain.sharedBrain.inputDecimalNode(DecimalNode()) { (numberNode) in
+        DispatchQueue.global(qos: .userInitiated).async {
             
-            completeHandler(numberNode.valueInString())
+            Brain.sharedBrain.inputDecimalNode(DecimalNode()) { (numberNode) in
+                
+                DispatchQueue.main.async {
+                    
+                    self.MVC_Controller.onDecimalSymbolAdded(result: numberNode.valueInString())
+                }
+                
+            }
         }
     }
     
-    func appendOperatorWith(_ operatorString: String, _ completeHandler: (String) -> ()) {
+    func addOperatorWith(_ operatorString: String) {
         
         let opType = operatorGroup[operatorString]
         
@@ -62,26 +76,49 @@ class CalculatorModel : NSObject, CalculatorControllerToModelProtocol{
             fatalError("create operator from \(operatorString) fail, operator probably not defined")
         }
         
-        Brain.sharedBrain.inputOperatorNode(newOperator) { (numberNode) in
+        DispatchQueue.global(qos: .userInitiated).async {
             
-            completeHandler(numberNode.valueInString())
+            DispatchQueue.main.async {
+               
+                Brain.sharedBrain.inputOperatorNode(newOperator) { (numberNode) in
+                    
+                    self.MVC_Controller.onOperatorAdded(result: numberNode.valueInString())
+                }
+            }
+            
         }
+       
     }
     
-    func clearAll(_ completeHandler: (String) -> ()) {
+    func clearAll() {
         
-        Brain.sharedBrain.resetBrain { (numberNode) in
-            
-            completeHandler(numberNode.valueInString())
+        DispatchQueue.global(qos: .userInitiated).async {
+           
+            Brain.sharedBrain.resetBrain { (numberNode) in
+                
+                DispatchQueue.main.async {
+                 
+                    self.MVC_Controller.onClearAll(result: numberNode.valueInString())
+                }
+            }
         }
+        
     }
     
-    func calculateResult(_ completeHandler: (String) -> ()) {
+    func calculateResult() {
         
-        Brain.sharedBrain.calculate { (numberNode) in
+        DispatchQueue.global(qos: .userInitiated).async{
             
-            completeHandler(numberNode.valueInString())
+            DispatchQueue.main.async {
+                
+                Brain.sharedBrain.calculate { (numberNode) in
+                    
+                    self.MVC_Controller.onCalculate(result: numberNode.valueInString())
+                }
+            }
+            
         }
+        
     }
 
 }

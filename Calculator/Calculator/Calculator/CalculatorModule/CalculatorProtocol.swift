@@ -1,5 +1,5 @@
 //
-//  __FILEBASENAME__.swift
+//
 //  
 //
 //  Created by Nelson on 13/7/19.
@@ -34,21 +34,45 @@ protocol CalculatorControllerToViewProtocol : class{
 protocol CalculatorControllerToModelProtocol : class{
     
     ///add a digital number
-    func appendDigitalNumberWith(_ numberString:String, _ completeHandler:(String)->())
+    func addDigitalNumberWith(_ numberString:String)
     
-    ///add a decimal to digital
-    func appendDecimalSymbol(_ completeHandler:(String)->())
+    ///add a decimal
+    func addDecimalSymbol()
     
     ///add a operator
-    func appendOperatorWith(_ operatorString:String, _ completeHandler:(String)->())
+    func addOperatorWith(_ operatorString:String)
     
     ///clear all
-    func clearAll(_ completeHandler:(String)->())
+    func clearAll()
     
     ///calculate final result
-    func calculateResult(_ completeHandler:(String)->())
+    func calculateResult()
 }
 
 protocol CalculatorModelToControllerProtocol : class{
     
+    ///call when number added
+    ///
+    ///return a number in string
+    func onDigitalNumberAdded(result:String)
+    
+    ///call when decimal added
+    ///
+    ///return a number in string
+    func onDecimalSymbolAdded(result:String)
+    
+    ///call when operator added
+    ///
+    ///return a number in string
+    func onOperatorAdded(result:String)
+    
+    ///call when clear
+    ///
+    ///return a number in string
+    func onClearAll(result:String)
+    
+    ///call when calculate
+    ///
+    ///return a calcuate result in string
+    func onCalculate(result:String)
 }
