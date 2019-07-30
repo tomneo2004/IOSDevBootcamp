@@ -21,13 +21,41 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iO1-VM-SzC">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tZR-jb-3Gf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="jrh-fR-swR"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8DI-C1-TC0">
+                                <rect key="frame" x="138" y="589" width="99" height="58"/>
+                                <color key="backgroundColor" red="0.3436697345890411" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="38"/>
+                                <state key="normal" title="Share">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="share:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jCU-BE-99Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="8DI-C1-TC0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="138" id="DOt-0j-nsR"/>
+                            <constraint firstItem="tZR-jb-3Gf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="I7B-5H-NTa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iO1-VM-SzC" secondAttribute="bottom" id="K2k-fe-gEQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8DI-C1-TC0" secondAttribute="trailing" constant="138" id="P1C-js-88q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tZR-jb-3Gf" secondAttribute="trailing" id="crF-xO-JY1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iO1-VM-SzC" secondAttribute="trailing" id="h2r-mH-2D9"/>
                             <constraint firstItem="iO1-VM-SzC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="lM9-do-DSq"/>
+                            <constraint firstItem="tZR-jb-3Gf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="uGd-7U-SnK"/>
                             <constraint firstItem="iO1-VM-SzC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uia-T9-85T"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="8DI-C1-TC0" secondAttribute="bottom" constant="20" id="xjP-lH-BeG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -39,12 +67,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraButton" destination="yd8-x0-uRJ" id="6lM-3D-tQ9"/>
                         <outlet property="imageView" destination="iO1-VM-SzC" id="1lD-4O-dfV"/>
+                        <outlet property="shareButton" destination="8DI-C1-TC0" id="8Kw-z8-eMO"/>
+                        <outlet property="topImageView" destination="tZR-jb-3Gf" id="god-al-mpW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="874" y="769"/>
+            <point key="canvasLocation" x="872.79999999999995" y="768.66566716641682"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Y75-Vf-FsB">

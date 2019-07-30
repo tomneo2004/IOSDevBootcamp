@@ -17,6 +17,8 @@
 		521594F822E568D400801FE4 /* VisualRecognitionV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521594F522E568D400801FE4 /* VisualRecognitionV3.framework */; };
 		521594F922E568D400801FE4 /* VisualRecognitionV3.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 521594F522E568D400801FE4 /* VisualRecognitionV3.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		521594FC22E5774000801FE4 /* ibm-credentials.env in Resources */ = {isa = PBXBuildFile; fileRef = 521594FB22E5774000801FE4 /* ibm-credentials.env */; };
+		526490E222EAE1AD000EADAA /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526490E122EAE1AD000EADAA /* SVProgressHUD.framework */; };
+		526490E322EAE1AD000EADAA /* SVProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 526490E122EAE1AD000EADAA /* SVProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				526490E322EAE1AD000EADAA /* SVProgressHUD.framework in Embed Frameworks */,
 				521594F722E568D400801FE4 /* RestKit.framework in Embed Frameworks */,
 				521594F922E568D400801FE4 /* VisualRecognitionV3.framework in Embed Frameworks */,
 			);
@@ -45,6 +48,7 @@
 		521594F422E568D400801FE4 /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
 		521594F522E568D400801FE4 /* VisualRecognitionV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VisualRecognitionV3.framework; path = Carthage/Build/iOS/VisualRecognitionV3.framework; sourceTree = "<group>"; };
 		521594FB22E5774000801FE4 /* ibm-credentials.env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ibm-credentials.env"; sourceTree = SOURCE_ROOT; };
+		526490E122EAE1AD000EADAA /* SVProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SVProgressHUD.framework; path = Carthage/Build/iOS/SVProgressHUD.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526490E222EAE1AD000EADAA /* SVProgressHUD.framework in Frameworks */,
 				521594F622E568D400801FE4 /* RestKit.framework in Frameworks */,
 				521594F822E568D400801FE4 /* VisualRecognitionV3.framework in Frameworks */,
 			);
@@ -63,6 +68,7 @@
 		521594D622E55C5A00801FE4 = {
 			isa = PBXGroup;
 			children = (
+				526490E122EAE1AD000EADAA /* SVProgressHUD.framework */,
 				521594F422E568D400801FE4 /* RestKit.framework */,
 				521594F522E568D400801FE4 /* VisualRecognitionV3.framework */,
 				521594E122E55C5A00801FE4 /* Seefood */,
