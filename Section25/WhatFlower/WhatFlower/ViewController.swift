@@ -9,11 +9,16 @@
 import UIKit
 import CoreML
 import Vision
+import SwiftyJSON
+import Alamofire
+import SDWebImage
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var textView: UITextView!
     
+    let wikiURL = "https://en.wikipedia.org/w/api.php"
     let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -46,6 +51,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             let classification = request.results?.first as? VNClassificationObservation
             self.navigationItem.title = classification?.identifier
+            
+            self.getDescription(classification!.identifier)
         }
         
         let handler = VNImageRequestHandler(ciImage: ciimage)
@@ -55,6 +62,52 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         catch{
             print(error)
+        }
+    }
+    
+    func getDescription(_ flowerName : String){
+        
+        let parameters = [
+            
+            "format":"json",
+            "action":"query",
+            "prop":"extracts",
+            "exintro":"",
+            "explaintext":"",
+            "titles":flowerName,
+            "indexpageids":"",
+            "redirects":"1",
+            "pithumbsize":"500"
+        ]
+        
+        Alamofire.request(wikiURL, parameters: parameters).responseData { (response) in
+            
+            if let err = response.error{
+                print(err)
+            }
+            else{
+                if let data = response.result.value{
+                    
+                    do {
+                        let jsonData = try JSON(data: data)
+                        let pageId = jsonData["query"]["pageids"][0].stringValue
+                        let text = jsonData["query"]["pages"][pageId]["extract"].stringValue
+                        let imageURL = jsonData["query"]["pages"][pageId]["thumbnail"]["source"].stringValue
+                        
+                        DispatchQueue.main.async {
+                            if !imageURL.isEmpty{
+                                self.imageView.sd_setImage(with: URL(string: imageURL), completed: nil)
+                            }
+                            
+                            self.textView.text = text
+                        }
+                    }
+                    catch{
+                        print(error)
+                    }
+                    
+                }
+            }
         }
     }
 
